@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../deep_thinking/CommandParser.h"
+#include "../deep_thinking/CommandParser.cpp"
 #include "../deep_thinking/ArgumentChecker.h"
 #include "pch.h"
 
