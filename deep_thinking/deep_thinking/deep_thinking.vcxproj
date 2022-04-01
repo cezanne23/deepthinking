@@ -141,7 +141,7 @@
   <ItemGroup>
     <ClCompile Include="SearchEngine.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="EmployeeManager.cpp" /
+    <ClCompile Include="EmployeeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SearchEngine.h" />
