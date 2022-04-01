@@ -16,6 +16,7 @@ public:
 		string word;
 
 		while (getline(ss, word, disc)){ // ',')) {
+			while (' ' == word[0])  word.erase(0, 1);
 			result.push_back(word);
 		}
 #ifdef NOTDF
@@ -41,7 +42,7 @@ public:
 
 	};
 	string bxx;
-	vector<int> seachID(const map<int, EmployeeInfo>& employeeInfo,
+	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
 		const string condition);
 
 private:
