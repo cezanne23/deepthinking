@@ -8,12 +8,12 @@ using namespace std;
 
 class InputParcer {
 public:
-	vector<string> split(string str) {
+	vector<string> split(string str, char disc) {
 		vector<string> result;
 		stringstream ss(str);
 		string word;
 
-		while (getline(ss, word, ',')) {
+		while (getline(ss, word, disc)){ // ',')) {
 			result.push_back(word);
 		}
 #ifdef NOTDF
@@ -38,6 +38,7 @@ public:
 		searchPolicyList.insert({ PHONENUM, new SearhByPhoneNumber() });
 
 	};
+	string bxx;
 	vector<int> seachID(const map<int, EmployeeInfo>& employeeInfo,
 		const string condition);
 
@@ -50,5 +51,6 @@ private:
 	const string CERTI{ "certi" };
 	const string CL{ "cl" };
 	const string PHONENUM{ "phoneNum" };
+	const char CMD_DISC{ ',' };
 	const int SEARCH_OPTION_IDX = 4;
 };
