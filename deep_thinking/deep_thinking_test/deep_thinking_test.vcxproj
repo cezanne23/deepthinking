@@ -34,6 +34,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="TC_CommandParser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Commandtest.cpp" />
@@ -45,6 +46,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="EmployeeManagerTest.cpp" />
+    <ClCompile Include="TC_CommandParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
