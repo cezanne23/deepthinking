@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="EmployeeInfoManager.cpp" />
+    <ClCompile Include="CommandParser.cpp" />
     <ClCompile Include="SearchEngine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="EmployeeManager.cpp" />
@@ -149,6 +150,8 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="EmployeeInfoManager.h" />
+    <ClInclude Include="ArgumentChecker.h" />
+    <ClInclude Include="CommandParser.h" />
     <ClInclude Include="SearchEngine.h" />
     <ClInclude Include="SearchPolicy.h" />
     <ClInclude Include="EmployeeManager.h" />
