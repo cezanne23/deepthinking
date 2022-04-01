@@ -4,10 +4,8 @@
 #include <vector>
 
 #include "SearchPolicy.h"
+#include "Employee.h"
 using namespace std;
-
-// todo dummy class should be removed
-class EmployeeInfo {};
 
 class SearchEngine {
  public:
