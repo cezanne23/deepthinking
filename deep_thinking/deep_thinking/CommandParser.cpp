@@ -51,7 +51,7 @@ bool CommandParser::validateArguments(const vector<string>& arguments) {
 				continue;
 			}
 			else {
-				cout << "[DEBUG] failed on validateAddCommand : " << checker->get_argument_name() << endl;
+				cout << "[DEBUG] failed on validateAddCommand : " << checker->getArgumentName() << endl;
 				return false;
 			}
 		}
