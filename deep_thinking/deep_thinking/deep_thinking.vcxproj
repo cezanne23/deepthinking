@@ -143,6 +143,7 @@
     <ClCompile Include="EmployeeInfoManager.cpp" />
     <ClCompile Include="SearchEngine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="EmployeeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="EmployeeInfoManager.h" />
     <ClInclude Include="SearchEngine.h" />
     <ClInclude Include="SearchPolicy.h" />
+    <ClInclude Include="EmployeeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
