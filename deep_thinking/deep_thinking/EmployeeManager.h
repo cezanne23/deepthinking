@@ -5,7 +5,7 @@ using namespace std;
 
 class EmployeeManager {
 public:
-    bool setFilePath(string inputfile, string outputfile);
+    bool setFilePath(const string& inputfile, const string& outputfile);
     const bool isVaildFilePath(string filepath) const;
 
 private:

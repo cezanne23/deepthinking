@@ -6,7 +6,7 @@ const string EmployeeManager::fileExtension(string filepath) const {
     return "";
 }
 
-bool EmployeeManager::setFilePath(string inputfile, string outputfile) {
+bool EmployeeManager::setFilePath(const string& inputfile, const string& outputfile) {
     if (!isVaildFilePath(inputfile)) return false;
     if (!isVaildFilePath(outputfile)) return false;
 
