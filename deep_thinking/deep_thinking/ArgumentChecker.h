@@ -9,7 +9,7 @@ using namespace std;
 class ArgumentChecker {
 public:
 	ArgumentChecker(const string& command) : argument_name_(command) {}
-	virtual bool check(const string& argument) = 0;
+	virtual bool check(const string& argument) const = 0;
 	const string& get_argument_name() {
 		return argument_name_;
 	}
@@ -20,7 +20,7 @@ protected:
 class EmployNumChecker : public ArgumentChecker {
 public:
 	EmployNumChecker() : ArgumentChecker("employNum") {}
-	virtual bool check(const string& argument) override { 
+	virtual bool check(const string& argument) const override  {
 		size_t employ_number = stol(argument);
 		if ((0 <= employ_number && employ_number < 22000000UL) || 69000000UL <= employ_number && employ_number < 100000000UL) {
 			return true;
@@ -32,7 +32,7 @@ public:
 class NameChecker : public ArgumentChecker {
 public:
 	NameChecker() : ArgumentChecker("name") {}
-	virtual bool check(const string& argument) override {
+	virtual bool check(const string& argument) const override {
 		if (argument.size() > max_name_length_) return false;
 		for (auto& c : argument) {
 			if (c != ' ' && islower(c)) return false;
@@ -46,7 +46,7 @@ private:
 class CareerLevelChecker : public ArgumentChecker {
 public:
 	CareerLevelChecker() : ArgumentChecker("cl") {}
-	virtual bool check(const string& argument) override { 
+	virtual bool check(const string& argument) const override {
 		for (auto& cl : career_levels_) {
 			if (argument == cl) { 
 				return true; }
@@ -60,7 +60,7 @@ private:
 class BirthdayChecker : public ArgumentChecker {
 public:
 	BirthdayChecker() : ArgumentChecker("birthday") {}
-	virtual bool check(const string& argument) override { 
+	virtual bool check(const string& argument) const override {
 		return argument.size() > max_birthday_length_ ? false : true;
 	}
 private:
@@ -70,7 +70,7 @@ private:
 class PhoneNumberChecker : public ArgumentChecker {
 public:
 	PhoneNumberChecker() : ArgumentChecker("phoneNum") {}
-	virtual bool check(const string& argument) override {
+	virtual bool check(const string& argument) const override {
 		if (argument.substr(0, 3) != phone_number_prefix_) {
 			return false;
 		}
@@ -84,7 +84,7 @@ private:
 class SwCertiChecker : public ArgumentChecker {
 public:
 	SwCertiChecker() : ArgumentChecker("certi") {}
-	virtual bool check(const string& argument) override { 
+	virtual bool check(const string& argument) const override {
 		for (auto& certi : certifications_) {
 			if (argument == certi) {
 				return true;
