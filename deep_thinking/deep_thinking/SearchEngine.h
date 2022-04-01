@@ -5,6 +5,7 @@
 
 #include "SearchPolicy.h"
 #include "EmployeeInfo.h"
+
 using namespace std;
 
 class SearchEngine {
