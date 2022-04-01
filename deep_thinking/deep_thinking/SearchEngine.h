@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "SearchPolicy.h"
-#include "Employee.h"
+#include "EmployeeInfo.h"
 using namespace std;
 
 class SearchEngine {
