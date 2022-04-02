@@ -41,7 +41,6 @@ public:
 		searchPolicyList.insert({ PHONENUM, new SearhByPhoneNumber() });
 
 	};
-	string bxx;
 	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
 		const string condition);
 
