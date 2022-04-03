@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include "SearchPolicy.h"
+
 using namespace std;
 
 class InputParcer {

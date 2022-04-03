@@ -37,7 +37,7 @@
   <ItemGroup>
     <ClInclude Include="EmployeeManager.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="SearchEngine.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -50,7 +50,7 @@
     <ClInclude Include="Command.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Employee.h">
+    <ClInclude Include="EmployeeInfo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="ArgumentChecker.h">

@@ -37,6 +37,7 @@
     <ClInclude Include="TC_CommandParser.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EmployeeInfoTest.cpp" />
     <ClCompile Include="Commandtest.cpp" />
     <ClCompile Include="SearchEngineTest.cpp" />
     <ClCompile Include="pch.cpp">

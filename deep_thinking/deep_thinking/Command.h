@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <map>
-#include "Employee.h"
+#include "EmployeeInfo.h"
 
 using namespace std;
 
