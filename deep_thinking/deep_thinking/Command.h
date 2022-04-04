@@ -12,6 +12,7 @@ public:
 	ICommand() : employeeDB(EmployeeDB::getDB()) {
 	}
 	virtual string runCmd(vector<string>& command) = 0;
+	const int CMD_DISPLAY_RECORD = 1;
 
 protected:
 	SearchEngine searchEngine;
@@ -32,7 +33,7 @@ private:
 };
 
 class DeleteCommand : public ICommand {
-public:
+public:	
 	virtual string runCmd(vector<string>& command) override;
 };
 

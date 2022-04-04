@@ -38,6 +38,10 @@ public:
     const string getBirthDay() const { return birthDay_; }
     const string getCerti() const { return certi_; }
 
+    const string getString() const { 
+        return getEmployeeNum()+ "," + getName() + "," + getLevel() + "," + getPhoneNum()
+            +"," + getBirthDate() + "," + getCerti(); }
+
     bool operator== (const EmployeeInfo& info) const {
         return (employeeNum_ == info.getEmployeeNum()
             && getName() == info.getName()
