@@ -152,7 +152,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("KYUMOK KIM");
     command.push_back("name");
     command.push_back("KYUMOK LEE");
-    EXPECT_EQ(modifyCommand.runCmd(command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
+    // move seperat TC EXPECT_EQ(modifyCommand.runCmd(command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
 }
 TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
     EmployeeInfoManager* employeeInfoManager = new EmployeeInfoManager();
@@ -165,9 +165,9 @@ TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
         "SCH, , , ,name,AAAA BBBB"),
         "SCH,1");
 
-    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "MOD, , , ,cl,CL3,name,AAAA CCCC"),
-        "ModifyCommand");
+    // EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+    //     "MOD, , , ,cl,CL3,name,AAAA CCCC"),
+    //     "ModifyCommand");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "SCH, , , ,name,AAAA BBBB"),
@@ -230,5 +230,41 @@ TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL,-p, , ,birthday,19980906"),
         "DEL,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO\nDEL,18050303,AAAA BBBB,CL3,010-9777-6057,19980906,PRO\nDEL,18050304,AAAA BBBB,CL3,010-9777-6058,19980906,PRO\nDEL,18050305,AAAA BBBB,CL3,010-9777-6059,19980906,PRO\nDEL,18050306,AAAA BBBB,CL3,010-9777-6010,19980906,PRO");
+}
+
+TEST(EmployeeInforManagerTC, EmployeeInforMODTest) {
+    EmployeeInfoManager* employeeInfoManager = new EmployeeInfoManager();
+
+    EmployeeDB::getDB()->employeeList.clear();
+    map<string, EmployeeInfo> eDB =  EmployeeDB::getDB()->employeeList;
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    
+    EXPECT_EQ(1, EmployeeDB::getDB()->employeeList.size());
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD, , , ,name,FB NTAWR,birthday,20050520"),
+        "MOD,1");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD, , , ,name,FB NTAWRAA,birthday,20150524"),
+        "MOD,NONE");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD, , , ,name,FB NTAWR,name,AAA BBBB"),
+        "MOD,1");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD, , , ,name,AAA BBBB,cl,CL4"),
+        "MOD,1");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD, , , ,name,AAA BBBB,phoneNum,010-1234-5678"),
+        "MOD,1"); 
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD, , , ,name,AAA BBBB,certi,ADV"),
+        "MOD,1");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD, , , ,name,AAA BBBB,employeeNum,12345678"),
+        "MOD,1");
 }
 
