@@ -98,16 +98,6 @@ TEST_F(SearchEngineTest, scenariTest) {
 	res.clear();
 }
 
-TEST(SearchEngineParserTest, ParseTest) {
-	InputParcer parser;
-
-	string incmd("SCH, ,-m, ,birthday,09");
-	vector<string> exp_ret = { "SCH","" ,"-m","" ,"birthday","09" };
-	vector<string> ret = parser.split(incmd, ',');
-
-	EXPECT_EQ(exp_ret, ret);
-}
-
 class SearchEnginePerformanceTest : public ::testing::Test {
 protected:
 	void SetUp() override {
@@ -115,7 +105,7 @@ protected:
 		string data = "ADD, , , , 05101762, VCUHLE HMU, CL4, 010 - 3988 - 9289, 20030819, PRO";
 		vector<string> data1 = parser.split(data, ',');
 
-		for (auto i = 0; i < MAX_SIZE; i++) { 
+		for (auto i = 0; i < MAX_SIZE; i++) {
 			int num = i + 10000000;
 			string id = to_string(num);
 			EmployeeInfo employee{ id, data1[5], data1[6], data1[7], data1[8], data1[9] };
@@ -138,10 +128,10 @@ TEST_F(SearchEnginePerformanceTest, maxDBsearchTest) {
 	EXPECT_EQ(exp, ret);
 	incmd.clear();
 	exp.clear();
-	ret.clear(); 
+	ret.clear();
 
-	incmd  = "SCH, , , ,employeeNum,10099999";
-	exp.push_back( "10099999" );
+	incmd = "SCH, , , ,employeeNum,10099999";
+	exp.push_back("10099999");
 	ret = searchEngine.seachID(employeeInfoDict, incmd);
 	EXPECT_EQ(exp, ret);
 	incmd.clear();
@@ -154,7 +144,7 @@ TEST_F(SearchEnginePerformanceTest, maxDBsearchTest) {
 	incmd.clear();
 	exp.clear();
 	ret.clear();
-	
+
 	incmd = "SCH, , , ,cl,CL4";
 	ret = searchEngine.seachID(employeeInfoDict, incmd);
 	EXPECT_EQ(100000, ret.size());
@@ -175,4 +165,23 @@ TEST_F(SearchEnginePerformanceTest, maxDBsearchTest) {
 	incmd.clear();
 	exp.clear();
 	ret.clear();
+}
+
+TEST(SearchEngineInterfaceTest, classNameTest) {
+
+	SearchEngine searchEngine;
+	map<string, EmployeeInfo> testdb;
+
+	//	vector<EmployeeInfo> ret = searchEngine.search(testdb, 1);
+		//EXPECT_EQ(0, ret.size());
+}
+
+TEST(SearchEngineParserTest, ParseTest) {
+	InputParcer parser;
+
+	string incmd("SCH, ,-m, ,birthday,09");
+	vector<string> exp_ret = { "SCH","" ,"-m","" ,"birthday","09" };
+	vector<string> ret = parser.split(incmd, ',');
+
+	EXPECT_EQ(exp_ret, ret);
 }
