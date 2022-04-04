@@ -21,6 +21,19 @@ private:
     map<string, EmployeeInfo> employeeList;
     CommandParser commandParser;
     map<string, ICommand*> commandList;
+    // NOTE, multimap pair<key, value = employNum>
+    multimap<string, string> fullNameMap;
+    multimap<string, string> firstNameMap;
+    multimap<string, string> levelMap;
+    multimap<string, string> lastNameMap;
+    multimap<string, string> phoneNumMap;
+    multimap<string, string> phoneMidNumMap;
+    multimap<string, string> phoneLastNumMap;
+    multimap<string, string> birthDateMap;
+    multimap<string, string> birthYearMap;
+    multimap<string, string> birthMonthMap;
+    multimap<string, string> birthDayMap;
+    multimap<string, string> certiMap;
 
     const int OP_COMMAND_IDX = 0;
 };
