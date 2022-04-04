@@ -10,3 +10,14 @@ string EmployeeInfoManager::ExcuteCommand(string singleCmdString) {
 
     return result;
 };
+
+void EmployeeInfoManager::Run(string inputfile, string outputfile) {
+    //TO DO : add to call filecontroller (read command/ write result)
+    //if (!fileController.open(inputfile, inputfile)) return;
+
+    //string command;
+    //while ((command = fileController.getCommand()) != "") {       
+    //    fileController.writeCommandResult(ExcuteCommand(command));
+    //} 
+    //fileController.close();
+}

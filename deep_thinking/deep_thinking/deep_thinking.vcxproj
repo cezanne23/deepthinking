@@ -144,7 +144,7 @@
     <ClCompile Include="CommandParser.cpp" />
     <ClCompile Include="SearchEngine.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="EmployeeManager.cpp" />
+    <ClCompile Include="FileController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h" />
@@ -155,7 +155,7 @@
     <ClInclude Include="CommandParser.h" />
     <ClInclude Include="SearchEngine.h" />
     <ClInclude Include="SearchPolicy.h" />
-    <ClInclude Include="EmployeeManager.h" />
+    <ClInclude Include="FileController.h" />
     <ClInclude Include="StringSplitter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

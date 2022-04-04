@@ -5,6 +5,7 @@
 
 #include "Command.h"
 #include "CommandParser.h"
+#include "FileController.h"
 using namespace std;
 
 class EmployeeInfoManager {
@@ -16,11 +17,13 @@ public:
         commandList.insert({ "SCH", new SearchCommand() });
     }
     string ExcuteCommand(string singleCmdString);
-
+    void Run(string inputfile, string outputfile);
 private:
     map<string, EmployeeInfo> employeeList;
     CommandParser commandParser;
     map<string, ICommand*> commandList;
+    FileController fileController;
+
     // NOTE, multimap pair<key, value = employNum>
     multimap<string, string> fullNameMap;
     multimap<string, string> firstNameMap;
