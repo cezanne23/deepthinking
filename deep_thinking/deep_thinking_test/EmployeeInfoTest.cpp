@@ -58,24 +58,42 @@ TEST(EmployeeInfoTest, operatorNotEqualTest) {
 }
 
 TEST(EmployeeInfoTest, getNameFullTest) {
-    EmployeeInfo test = { "18040189","San LEE", "CL3", "010-1221-55555", "19981010", "ADV" };
+    EmployeeInfo test = { "18040189","San LEE", "CL3", "010-1221-5555", "19981010", "ADV" };
     EXPECT_EQ(test.getName(), "San LEE");
     EXPECT_EQ(test.getFirstName(), "San");
     EXPECT_EQ(test.getLastName(), "LEE");
 }
 
 TEST(EmployeeInfoTest, getBirthdayFullTest) {
-    EmployeeInfo test = { "18040189","San LEE", "CL3", "010-1221-55555", "19891210", "ADV" };
+    EmployeeInfo test = { "18040189","San LEE", "CL3", "010-1221-5555", "19891210", "ADV" };
     EXPECT_EQ(test.getBirthDate(), "19891210");
     EXPECT_EQ(test.getBirthYear(), "1989");
     EXPECT_EQ(test.getBirthMonth(), "12");
     EXPECT_EQ(test.getBirthDay(), "10");
 
 
-    EmployeeInfo emptyDateTest = { "18040189","San LEE", "CL3", "010-1221-55555", "1210", "ADV" };
+    EmployeeInfo emptyDateTest = { "18040189","San LEE", "CL3", "010-1221-5555", "1210", "ADV" };
     EXPECT_EQ(emptyDateTest.getBirthDate(), "");
     EXPECT_EQ(emptyDateTest.getBirthYear(), "");
     EXPECT_EQ(emptyDateTest.getBirthMonth(), "");
     EXPECT_EQ(emptyDateTest.getBirthDay(), "");
+}
+
+TEST(EmployeeInfoTest, getPhoneNumberFullTest) {
+    EmployeeInfo test = { "18040189","San LEE", "CL3", "010-1221-5555", "19891210", "ADV" };
+    EXPECT_EQ(test.getPhoneNum(), "010-1221-5555");
+    EXPECT_EQ(test.getPhoneMidNum(), "1221");
+    EXPECT_EQ(test.getPhoneLastNum(), "5555");
+
+
+    EmployeeInfo emptyPhoneTest = { "18040189","San LEE", "CL3", "010234534", "1210", "ADV" };
+    EXPECT_EQ(emptyPhoneTest.getPhoneNum(), "");
+    EXPECT_EQ(emptyPhoneTest.getPhoneMidNum(), "");
+    EXPECT_EQ(emptyPhoneTest.getPhoneLastNum(), "");
+
+    EmployeeInfo emptyPhoneTest1 = { "18040189","San LEE", "CL3", "010-2345", "1210", "ADV" };
+    EXPECT_EQ(emptyPhoneTest1.getPhoneNum(), "");
+    EXPECT_EQ(emptyPhoneTest1.getPhoneMidNum(), "");
+    EXPECT_EQ(emptyPhoneTest1.getPhoneLastNum(), "");
 }
 
