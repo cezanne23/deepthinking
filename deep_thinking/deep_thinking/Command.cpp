@@ -44,7 +44,8 @@ string ModifyCommand::runCmd(vector<string>& command) {
 		}
 		// todo refactoring
 		if (command[MOD_TARGET_KEY_IDX] == EMPLOYEENUM) {
-			employeeDB->employeeList[employeeNum].setEmployeeNum(command[MOD_TARGET_VALUE_IDX]);
+			// requirement: should not change id
+            // employeeDB->employeeList[employeeNum].setEmployeeNum(command[MOD_TARGET_VALUE_IDX]);
 		}
 		else if (command[MOD_TARGET_KEY_IDX] == BIRTHDAY) {
 			employeeDB->employeeList[employeeNum].setEmployeeNum(command[MOD_TARGET_VALUE_IDX]);

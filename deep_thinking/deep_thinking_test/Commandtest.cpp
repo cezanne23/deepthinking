@@ -242,6 +242,10 @@ TEST(EmployeeInforManagerTC, EmployeeInforMODTest) {
         "");
     
     EXPECT_EQ(1, EmployeeDB::getDB()->employeeList.size());
+   
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p, , ,birthday,19980906,birthday,19980926"),
+        "MOD,18050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "MOD, , , ,name,FB NTAWR,birthday,20050520"),
         "MOD,1");
@@ -262,9 +266,44 @@ TEST(EmployeeInforManagerTC, EmployeeInforMODTest) {
         "MOD,1"); 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "MOD, , , ,name,AAA BBBB,certi,ADV"),
-        "MOD,1");
-    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,1"); 
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand( // employeeNum should not change
         "MOD, , , ,name,AAA BBBB,employeeNum,12345678"),
         "MOD,1");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand( 
+        "MOD, , , ,employeeNum,12345678,phoneNum,010-4567-1234"),
+        "MOD,NONE");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050310,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,21050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,69050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,99050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,84050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
+        "");
+#if 0 // todo sort
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p, , ,certi,PRO,cl,CL4"),
+        ""
+ 
+    );
+
+    string("MOD,69050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
+        string("MOD,84050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
+        string("MOD,99050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
+        string("MOD,18050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
+        string("MOD,18050310,FB NTAWR,CL3,010-9777-6055,19980906,PRO")
+#endif
 }
 
