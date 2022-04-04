@@ -7,6 +7,8 @@ class SearchEngineSingletonDBTest : public ::testing::Test {
 protected:
 	void SetUp() override {
 		employDB = EmployeeDB::getDB();
+		employDB->employeeList.clear();
+
 		char strdata[] = "ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV\n\
 ADD, , , ,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO\n\
 ADD, , , ,18115040,TTETHU HBO,CL3,010-4581-2050,20080718,ADV\n\
