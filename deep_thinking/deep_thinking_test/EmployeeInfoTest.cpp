@@ -97,3 +97,27 @@ TEST(EmployeeInfoTest, getPhoneNumberFullTest) {
     EXPECT_EQ(emptyPhoneTest1.getPhoneLastNum(), "");
 }
 
+TEST(EmployeeInfoTest, OperatorTest)
+{
+    EmployeeInfo employee1 = { "18040189","San LEE", "CL3", "010-1221-55555", "19891210", "ADV" };
+    EmployeeInfo employee2 = { "69040189","Can LEE", "CL3", "010-1221-55555", "19891210", "ADV" };
+    EmployeeInfo employee3 = { "00040189","Aan LEE", "CL3", "010-1221-55555", "19891210", "ADV" };
+    EmployeeInfo employee4 = { "21040189","Xan LEE", "CL3", "010-1221-55555", "19891210", "ADV" };
+
+    EXPECT_TRUE((employee4 > employee3));
+    EXPECT_TRUE((employee4 > employee2));
+    EXPECT_TRUE((employee4 > employee1));
+
+    EXPECT_FALSE((employee3 > employee1));
+    EXPECT_TRUE((employee3 > employee2));
+    EXPECT_FALSE((employee3 > employee4));
+
+    EXPECT_FALSE((employee2 > employee1));
+    EXPECT_FALSE((employee2 > employee3));
+    EXPECT_FALSE((employee2 > employee4));
+
+    EXPECT_FALSE((employee1 > employee4));
+    EXPECT_TRUE((employee1 > employee3));
+    EXPECT_TRUE((employee1 > employee2));
+}
+
