@@ -12,11 +12,12 @@ protected:
     DeleteCommand deleteCommand;
     ModifyCommand modifyCommand;
     SearchCommand searchCommand;
-    map<string, EmployeeInfo> employeeInfo;
 };
 
 TEST_F(CommandRunTest, CommandTC) {
     vector<string> command;
+
+    // 3명의 Employee 추가
     command.clear();
     command.push_back("ADD");
     command.push_back(" ");
@@ -28,7 +29,6 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("010-9777-6055");
     command.push_back("19980906");
     command.push_back("PRO");
-    // 3명의 Employee 추가
     EXPECT_EQ(addCommand.runCmd(command), "");
 
     command.clear();
@@ -56,6 +56,17 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("19900804");
     command.push_back("EX");
     EXPECT_EQ(addCommand.runCmd(command), "");
+
+
+    // 탐색 Test
+    command.clear();
+    command.push_back("SCH");
+    command.push_back("-p");
+    command.push_back(" ");
+    command.push_back(" ");
+    command.push_back("name");
+    command.push_back("KYUMOK KIM");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
 
     // CL3 삭제
     command.clear();
@@ -101,7 +112,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back(" ");
     command.push_back("name");
     command.push_back("KYUMOK KIM");
-    EXPECT_EQ(searchCommand.runCmd(command), "SearchCommand" /*TODO : "SCH,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,NONE");
 
     // 수정 Test
     command.clear();
@@ -115,13 +126,17 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("KYUMOK LEE");
     EXPECT_EQ(modifyCommand.runCmd(command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
 }
-
+#if 0
 TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
     EmployeeInfoManager* employeeInfoManager = new EmployeeInfoManager();
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "ADD, , , ,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
         "");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "SCH, , , ,name,AAAA BBBB"),
+        "SCH,1");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "MOD, , , ,cl,CL3,name,AAAA CCCC"),
@@ -135,3 +150,4 @@ TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
         "DEL, , , ,name,AAAA CCCC"),
         "DeleteCommand");
 }
+#endif
