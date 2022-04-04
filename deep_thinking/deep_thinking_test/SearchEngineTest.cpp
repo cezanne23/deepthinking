@@ -1,6 +1,5 @@
 #include "../deep_thinking/SearchEngine.cpp"
 #include "pch.h"
-#include <map>
 
 class SearchEngineTest : public ::testing::Test {
 protected:
@@ -54,7 +53,7 @@ TEST_F(SearchEngineTest, scenariTest) {
 	ASSERT_EQ(res.size(), 1);
 	EXPECT_EQ(res[0], "02117175");
 	res.clear();
-	
+
 	res = searchEngine.seachID(employeeInfoDict, "SCH, , , ,employeeNum,79110836");
 	ASSERT_EQ(res.size(), 0);
 	res.clear();
@@ -66,13 +65,13 @@ TEST_F(SearchEngineTest, scenariTest) {
 
 	res = searchEngine.seachID(employeeInfoDict, "SCH,-p, , ,certi,PRO");
 	ASSERT_EQ(res.size(), 12);
-	/* todo where to search sort, searchEngine or output print
+	/* todo where to search sort, searchEngine or output print */
 	EXPECT_EQ(res[0], "88114052");
 	EXPECT_EQ(res[1], "01122329");
 	EXPECT_EQ(res[2], "02117175");
 	EXPECT_EQ(res[3], "05101762");
 	EXPECT_EQ(res[4], "08108827");
-	*/
+
 	res.clear();
 
 	res = searchEngine.seachID(employeeInfoDict, "SCH, , , ,certi,ADV");
@@ -81,13 +80,12 @@ TEST_F(SearchEngineTest, scenariTest) {
 
 	res = searchEngine.seachID(employeeInfoDict, "SCH,-p, , ,cl,CL4");
 	ASSERT_EQ(res.size(), 9);
-	/* todo where to search sort, searchEngine or output print
+	/* todo where to search sort, searchEngine or output print */
 	EXPECT_EQ(res[0], "88114052");
 	EXPECT_EQ(res[1], "01122329");
 	EXPECT_EQ(res[2], "02117175");
 	EXPECT_EQ(res[3], "05101762");
 	EXPECT_EQ(res[4], "08108827");
-	*/
 	res.clear();
 
 	res = searchEngine.seachID(employeeInfoDict, "SCH, ,-m, ,birthday,09");
@@ -104,9 +102,77 @@ TEST(SearchEngineParserTest, ParseTest) {
 	InputParcer parser;
 
 	string incmd("SCH, ,-m, ,birthday,09");
-	vector<string> exp_ret = { "SCH"," " ,"-m"," " ,"birthday","09" };
+	vector<string> exp_ret = { "SCH","" ,"-m","" ,"birthday","09" };
 	vector<string> ret = parser.split(incmd, ',');
 
 	EXPECT_EQ(exp_ret, ret);
+}
 
+class SearchEnginePerformanceTest : public ::testing::Test {
+protected:
+	void SetUp() override {
+		const size_t MAX_SIZE = 100000;
+		string data = "ADD, , , , 05101762, VCUHLE HMU, CL4, 010 - 3988 - 9289, 20030819, PRO";
+		vector<string> data1 = parser.split(data, ',');
+
+		for (auto i = 0; i < MAX_SIZE; i++) { 
+			int num = i + 10000000;
+			string id = to_string(num);
+			EmployeeInfo employee{ id, data1[5], data1[6], data1[7], data1[8], data1[9] };
+			employeeInfoDict.insert({ id,  employee });
+		}
+	}
+
+	void TearDown() override {};
+
+	InputParcer parser;
+	map<string, EmployeeInfo> employeeInfoDict;
+};
+
+TEST_F(SearchEnginePerformanceTest, maxDBsearchTest) {
+
+	SearchEngine searchEngine;
+	string incmd("SCH, , , ,employeeNum,10000001");
+	vector<string> exp = { "10000001" };
+	vector<string> ret = searchEngine.seachID(employeeInfoDict, incmd);
+	EXPECT_EQ(exp, ret);
+	incmd.clear();
+	exp.clear();
+	ret.clear(); 
+
+	incmd  = "SCH, , , ,employeeNum,10099999";
+	exp.push_back( "10099999" );
+	ret = searchEngine.seachID(employeeInfoDict, incmd);
+	EXPECT_EQ(exp, ret);
+	incmd.clear();
+	exp.clear();
+	ret.clear();
+
+	incmd = "SCH, , , ,name,VCUHLE HMU";
+	ret = searchEngine.seachID(employeeInfoDict, incmd);
+	EXPECT_EQ(100000, ret.size());
+	incmd.clear();
+	exp.clear();
+	ret.clear();
+	
+	incmd = "SCH, , , ,cl,CL4";
+	ret = searchEngine.seachID(employeeInfoDict, incmd);
+	EXPECT_EQ(100000, ret.size());
+	incmd.clear();
+	exp.clear();
+	ret.clear();
+
+	incmd = "SCH, , , ,certi,PRO";
+	ret = searchEngine.seachID(employeeInfoDict, incmd);
+	EXPECT_EQ(100000, ret.size());
+	incmd.clear();
+	exp.clear();
+	ret.clear();
+
+	incmd = "SCH, , , ,certi,ADV";
+	ret = searchEngine.seachID(employeeInfoDict, incmd);
+	EXPECT_EQ(0, ret.size());
+	incmd.clear();
+	exp.clear();
+	ret.clear();
 }
