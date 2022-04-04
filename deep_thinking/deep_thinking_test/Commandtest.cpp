@@ -7,7 +7,6 @@ protected:
     void SetUp() override {}
 
     void TearDown() override {}
-
     AddCommand addCommand;
     DeleteCommand deleteCommand;
     ModifyCommand modifyCommand;
@@ -76,7 +75,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back(" ");
     command.push_back("cl");
     command.push_back("CL3");
-    EXPECT_EQ(deleteCommand.runCmd(command), "DeleteCommand" /*TODO : "DEL,2"*/);
+    EXPECT_EQ(deleteCommand.runCmd(command), "2");
 
     command.clear();
     command.push_back("ADD");
@@ -126,7 +125,6 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("KYUMOK LEE");
     EXPECT_EQ(modifyCommand.runCmd(command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
 }
-#if 0
 TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
     EmployeeInfoManager* employeeInfoManager = new EmployeeInfoManager();
 
@@ -148,6 +146,47 @@ TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL, , , ,name,AAAA CCCC"),
-        "DeleteCommand");
+        "NONE");
 }
-#endif
+
+TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
+    EmployeeInfoManager* employeeInfoManager = new EmployeeInfoManager();
+
+    EmployeeDB::getDB()->employeeList.clear();
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050302,AAAA CCCC,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050303,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050304,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
+        "");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "DEL, , , ,name,AAAA CCCC"),
+        "1");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "DEL, , , ,phoneNum,010-9777-6055"),
+        "3");
+
+    EXPECT_EQ(EmployeeDB::getDB()->employeeList.size(), 0);
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050302,AAAA CCCC,CL3,010-9777-6055,19981006,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050303,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "DEL, , , ,birthday,19980906"),
+        "2");
+}
+

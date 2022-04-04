@@ -116,6 +116,16 @@ TEST_F(SearchEngineSingletonDBTest, singletonDBSizeTest) {
 	ASSERT_EQ(res.size(), 1);
 	EXPECT_EQ(res[0], "11109136");
 	res.clear();
+	
+	res = searchEngine.searchID(parser.split("SCH, -p, , , phoneNum, 010-3988-9289", ','));
+	ASSERT_EQ(res.size(), 1);
+	EXPECT_EQ(res[0], "05101762");
+	res.clear();
+	
+	res = searchEngine.searchID(parser.split("SCH, -p, , , birthday, 19991001", ','));
+	ASSERT_EQ(res.size(), 1);
+	EXPECT_EQ(res[0], "11125777");
+	res.clear();
 }
 
 TEST(SingletonDBTest, singletonDBSizeTest) {

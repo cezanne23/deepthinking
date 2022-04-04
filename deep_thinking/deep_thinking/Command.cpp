@@ -29,7 +29,15 @@ string AddCommand::runCmd(vector<string>& command) {
 };
 
 string DeleteCommand::runCmd(vector<string>& command) {
-    return "DeleteCommand";
+    vector<string> searchList = searchEngine.seachID(employeeDB->employeeList, command);
+    for (const auto& employeeNum : searchList) {
+        employeeDB->employeeList.erase(employeeNum);
+    }
+    //for (const auto& item : employeeDB->employeeList) {
+    //    cout << item.first << " " << item.second << endl;
+    //}
+    if (searchList.size()) return to_string(searchList.size());
+    else return "NONE";
 };
 
 string ModifyCommand::runCmd(vector<string>& command) {
