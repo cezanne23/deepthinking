@@ -46,6 +46,7 @@
     <ClCompile Include="FileControllerTest.cpp" />
     <ClCompile Include="CommandParserTest.cpp" />
     <ClCompile Include="StringSplitterTest.cpp" />
+    <ClCompile Include="SortingTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
