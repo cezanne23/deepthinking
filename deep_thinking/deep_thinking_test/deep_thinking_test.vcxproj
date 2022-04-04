@@ -34,9 +34,6 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="CommandParserTest.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="EmployeeInfoTest.cpp" />
     <ClCompile Include="Commandtest.cpp" />
     <ClCompile Include="SearchEngineTest.cpp" />
@@ -46,7 +43,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="EmployeeManagerTest.cpp" />
+    <ClCompile Include="FileControllerTest.cpp" />
     <ClCompile Include="CommandParserTest.cpp" />
     <ClCompile Include="StringSplitterTest.cpp" />
   </ItemGroup>

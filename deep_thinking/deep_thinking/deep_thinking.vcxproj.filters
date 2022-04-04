@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EmployeeManager.cpp">
+    <ClCompile Include="FileController.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -35,7 +35,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EmployeeManager.h">
+    <ClInclude Include="FileController.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SearchEngine.h">
