@@ -29,7 +29,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("19980906");
     command.push_back("PRO");
     // 3명의 Employee 추가
-    EXPECT_EQ(addCommand.runCmd(employeeInfo, command), "");
+    EXPECT_EQ(addCommand.runCmd(command), "");
 
     command.clear();
     command.push_back("ADD");
@@ -42,7 +42,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("010-3355-7888");
     command.push_back("19780806");
     command.push_back("PRO");
-    EXPECT_EQ(addCommand.runCmd(employeeInfo, command), "");
+    EXPECT_EQ(addCommand.runCmd(command), "");
 
     command.clear();
     command.push_back("ADD");
@@ -55,7 +55,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("010-1234-5678");
     command.push_back("19900804");
     command.push_back("EX");
-    EXPECT_EQ(addCommand.runCmd(employeeInfo, command), "");
+    EXPECT_EQ(addCommand.runCmd(command), "");
 
     // CL3 삭제
     command.clear();
@@ -65,7 +65,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back(" ");
     command.push_back("cl");
     command.push_back("CL3");
-    EXPECT_EQ(deleteCommand.runCmd(employeeInfo, command), "DeleteCommand" /*TODO : "DEL,2"*/);
+    EXPECT_EQ(deleteCommand.runCmd(command), "DeleteCommand" /*TODO : "DEL,2"*/);
 
     command.clear();
     command.push_back("ADD");
@@ -78,7 +78,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("010-3355-7888");
     command.push_back("19780806");
     command.push_back("PRO");
-    EXPECT_EQ(addCommand.runCmd(employeeInfo, command), "");
+    EXPECT_EQ(addCommand.runCmd(command), "");
 
     command.clear();
     command.push_back("ADD");
@@ -91,7 +91,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("010-1234-5678");
     command.push_back("19900804");
     command.push_back("EX");
-    EXPECT_EQ(addCommand.runCmd(employeeInfo, command), "");
+    EXPECT_EQ(addCommand.runCmd(command), "");
 
     // 탐색 Test
     command.clear();
@@ -101,7 +101,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back(" ");
     command.push_back("name");
     command.push_back("KYUMOK KIM");
-    EXPECT_EQ(searchCommand.runCmd(employeeInfo, command), "SearchCommand" /*TODO : "SCH,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
+    EXPECT_EQ(searchCommand.runCmd(command), "SearchCommand" /*TODO : "SCH,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
 
     // 수정 Test
     command.clear();
@@ -113,7 +113,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("KYUMOK KIM");
     command.push_back("name");
     command.push_back("KYUMOK LEE");
-    EXPECT_EQ(modifyCommand.runCmd(employeeInfo, command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
+    EXPECT_EQ(modifyCommand.runCmd(command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
 }
 
 TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {

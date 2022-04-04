@@ -157,6 +157,7 @@
     <ClInclude Include="SearchPolicy.h" />
     <ClInclude Include="EmployeeManager.h" />
     <ClInclude Include="StringSplitter.h" />
+    <ClInclude Include="EmployeeDB.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

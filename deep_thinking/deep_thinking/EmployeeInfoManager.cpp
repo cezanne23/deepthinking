@@ -6,7 +6,7 @@ string EmployeeInfoManager::ExcuteCommand(string singleCmdString) {
     vector<string> parsedCommand = commandParser.parseCommand(singleCmdString);
     string result;
     
-    result = commandList[parsedCommand[OP_COMMAND_IDX]]->runCmd(employeeList, parsedCommand);
+    result = commandList[parsedCommand[OP_COMMAND_IDX]]->runCmd(parsedCommand);
 
     return result;
 };
