@@ -69,15 +69,15 @@ private:
 		string key = parsedCmds[SEARCH_KEY_IDX];
 		if (parsedCmds[2] == "-d") {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
-				return employA.getBirthday().substr(6, 2) == key; });
+				return employA.getBirthYear() == key; });
 		}
 		else if (parsedCmds[2] == "-m") {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
-				return employA.getBirthday().substr(4, 2) == key; });
+				return employA.getBirthMonth() == key; });
 		}
 		else if (parsedCmds[2] == "-y") {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
-				return employA.getBirthday().substr(0, 4) == key; });
+				return employA.getBirthDay() == key; });
 		}
 	};
 };
