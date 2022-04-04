@@ -68,6 +68,10 @@ private:
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
 				return employA.getPhoneNum().substr(9, 4) == key; });
 		}
+		else {
+			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
+				return employA.getPhoneNum() == key; });
+		}
 	};;
 };
 
@@ -86,6 +90,10 @@ private:
 		else if (parsedCmds[SEARCH_OPTION_KEY_IDX] == SEARCH_BIRTH_YEAR_STR) {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
 				return employA.getBirthYear() == key; });
+		}
+		else {
+			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
+				return employA.getBirthDate() == key; });
 		}
 	};
 };
