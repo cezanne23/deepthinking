@@ -121,3 +121,50 @@ TEST(EmployeeInfoTest, OperatorTest)
     EXPECT_TRUE((employee1 > employee2));
 }
 
+TEST(EmployeeInfoTest, setInfoTest) {
+    EmployeeInfo test = { "18040189","San LEE", "CL3", "010-1221-5555", "19981010", "ADV" };
+    const string info[6] = { "22040189","DEEP Park", "CL1", "010-2134-5678", "20001010", "EX" };
+
+    test.setEmployeeNum(info[0]);
+    EXPECT_EQ(test.getEmployeeNum(), info[0]);
+    test.setName(info[1]);
+    EXPECT_EQ(test.getName(), info[1]);
+    test.setLevel(info[2]);
+    EXPECT_EQ(test.getLevel(), info[2]);
+    test.setPhoneNum(info[3]);
+    EXPECT_EQ(test.getPhoneNum(), info[3]);
+    test.setBirthDate(info[4]);
+    EXPECT_EQ(test.getBirthDate(), info[4]);
+    test.setCerti(info[5]);
+    EXPECT_EQ(test.getCerti(), info[5]);
+}
+
+TEST(EmployeeInfoTest, setNameFullTest) {
+    EmployeeInfo test = { "18040189","San LEE", "CL3", "010-1221-5555", "19981010", "ADV" };
+    test.setLastName("KIM");
+    EXPECT_EQ(test.getName(), "San KIM");
+    EXPECT_EQ(test.getFirstName(), "San");
+    EXPECT_EQ(test.getLastName(), "KIM");
+    test.setFirstName("BOB");
+    EXPECT_EQ(test.getName(), "BOB KIM");
+    EXPECT_EQ(test.getFirstName(), "BOB");
+    EXPECT_EQ(test.getLastName(), "KIM");
+    test.setName("JOHN SMITH");
+    EXPECT_EQ(test.getName(), "JOHN SMITH");
+    EXPECT_EQ(test.getFirstName(), "JOHN");
+    EXPECT_EQ(test.getLastName(), "SMITH");
+}
+
+TEST(EmployeeInfoTest, setBirthdayFullTest) {
+    EmployeeInfo test = { "18040189","San LEE", "CL3", "010-1221-5555", "19891210", "ADV" };
+    test.setBirthDate("20021203");
+    EXPECT_EQ(test.getBirthDate(), "20021203");
+    test.setBirthDay("15");
+    EXPECT_EQ(test.getBirthDate(), "20021215");
+    test.setBirthMonth("05");
+    EXPECT_EQ(test.getBirthDate(), "20020515");
+    test.setBirthMonth("01");
+    EXPECT_EQ(test.getBirthDate(), "20020115");
+    test.setBirthYear("2012");
+    EXPECT_EQ(test.getBirthDate(), "20120115");
+}
