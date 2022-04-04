@@ -15,7 +15,7 @@ public:
 
 protected:
 	SearchEngine searchEngine;
-	EmployeeDB employeeDB;
+	EmployeeDB* employeeDB;
 };
 
 class AddCommand : public ICommand {

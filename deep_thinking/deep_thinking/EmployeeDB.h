@@ -7,10 +7,10 @@ using namespace std;
 
 class EmployeeDB {
 public:
-    static EmployeeDB& getDB() {
+    static EmployeeDB* getDB() {
         static EmployeeDB* instance = new EmployeeDB();
 
-        return *instance;
+        return instance;
     }
 
     map<string, EmployeeInfo> employeeList;

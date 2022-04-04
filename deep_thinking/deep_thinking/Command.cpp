@@ -12,12 +12,20 @@ string AddCommand::runCmd(vector<string>& command) {
         command[ADD_CMD_BIRTHDAY_INFO_IDX],
         command[ADD_CMD_CERTI_INFO_IDX] };
 
-    employeeDB.employeeList.insert(pair<string, EmployeeInfo>(command[ADD_CMD_EMPLOYEENUM_INFO_IDX], employee));
+    employeeDB->employeeList.insert(pair<string, EmployeeInfo>(command[ADD_CMD_EMPLOYEENUM_INFO_IDX], employee));
     return "";
 };
 
 string DeleteCommand::runCmd(vector<string>& command) {
-    return "DeleteCommand";
+    vector<string> searchList = searchEngine.seachID(employeeDB->employeeList, command);
+    for (const auto& employeeNum : searchList) {
+        employeeDB->employeeList.erase(employeeNum);
+    }
+    //for (const auto& item : employeeDB->employeeList) {
+    //    cout << item.first << " " << item.second << endl;
+    //}
+    if (searchList.size()) return to_string(searchList.size());
+    else return "NONE";
 };
 
 string ModifyCommand::runCmd(vector<string>& command) {
