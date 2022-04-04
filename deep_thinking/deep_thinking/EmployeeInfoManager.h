@@ -6,6 +6,7 @@
 #include "Command.h"
 #include "CommandParser.h"
 #include "FileController.h"
+#include "EmployeeDB.h"
 using namespace std;
 
 class EmployeeInfoManager {
@@ -19,7 +20,6 @@ public:
     string ExcuteCommand(string singleCmdString);
     void Run(string inputfile, string outputfile);
 private:
-    map<string, EmployeeInfo> employeeList;
     CommandParser commandParser;
     map<string, ICommand*> commandList;
     FileController fileController;
@@ -37,6 +37,5 @@ private:
     multimap<string, string> birthMonthMap;
     multimap<string, string> birthDayMap;
     multimap<string, string> certiMap;
-
     const int OP_COMMAND_IDX = 0;
 };
