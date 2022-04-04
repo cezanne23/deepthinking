@@ -42,6 +42,24 @@ public:
 	};
 	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
 		const string condition);
+	/*
+	map<EmployeeNum, EmployInfo>
+	multimap<Name, EmployInfo>
+	multimap<FirstName, EmployInfo>
+	multimap<LastName, EmployInfo>
+	multimap<CL, EmployInfo>
+	multimap<PhoneNum, EmployInfo>
+	multimap<PhoneMiddleNum, EmployInfo>
+	multimap<PhoneLastNum, EmployInfo>
+	multimap<BirthDate, EmployInfo>
+	multimap<BirthYear, EmployInfo>
+	multimap<BirthMonth, EmployInfo>
+	multimap<BirthDay, EmployInfo>
+	multimap<Certi, EmployInfo>
+	*/
+
+	template <typename T1>
+	vector<EmployeeInfo> search(const T1 database, const int condition) ;
 
 private:
 	map<string, Search*> searchPolicyList;
@@ -55,3 +73,5 @@ private:
 	const char CMD_DISC{ ',' };
 	const int SEARCH_OPTION_IDX = 4;
 };
+
+

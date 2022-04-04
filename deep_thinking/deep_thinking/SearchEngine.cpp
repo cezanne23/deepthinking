@@ -9,3 +9,32 @@ vector<string> SearchEngine::seachID(const map<string, EmployeeInfo>& employeeIn
 
 	return result;
 }
+
+/*
+	map<EmployeeNum, EmployInfo>
+	multimap<Name, EmployInfo>
+	multimap<FirstName, EmployInfo>
+	multimap<LastName, EmployInfo>
+	multimap<CL, EmployInfo>
+	multimap<PhoneNum, EmployInfo>
+	multimap<PhoneMiddleNum, EmployInfo>
+	multimap<PhoneLastNum, EmployInfo>
+	multimap<BirthDate, EmployInfo>
+	multimap<BirthYear, EmployInfo>
+	multimap<BirthMonth, EmployInfo>
+	multimap<BirthDay, EmployInfo>
+	multimap<Certi, EmployInfo>
+	*/
+
+template <typename T1>
+vector<EmployeeInfo> search(const multimap<T1, EmployeeInfo> database, const int condition) {
+	
+#if 0
+	if constexpr (std::is_same_v<T1, int >) {
+		cout << "database type is  multimap<int, EmployeeInfo>\n";
+	}
+#endif
+	vector<EmployeeInfo> ret;
+	
+	return ret;
+}
