@@ -4,7 +4,6 @@
 #include <vector>
 #include <sstream>
 #include "SearchPolicy.h"
-#include "EmployeeInfo.h"
 
 using namespace std;
 

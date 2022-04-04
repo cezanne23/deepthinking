@@ -46,7 +46,6 @@ private:
 			return employA.getName() == key; };
 		return search_base(employeeInfo, isMatched);
 	};
-
 };
 
 class SearhByPhoneNumber : public Search {

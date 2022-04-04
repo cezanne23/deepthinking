@@ -107,4 +107,15 @@ TEST(SearchEngineParserTest, ParseTest) {
 	vector<string> ret = parser.split(incmd, ',');
 
 	EXPECT_EQ(exp_ret, ret);
+
+}
+
+TEST(SearchEngineParserTest, ParseTest) {
+	InputParcer parser;
+
+	string incmd("SCH, ,-m, ,birthday,09");
+	vector<string> exp_ret = { "SCH"," " ,"-m"," " ,"birthday","09" };
+	vector<string> ret = parser.split(incmd);
+
+	EXPECT_EQ(exp_ret, ret);
 }
