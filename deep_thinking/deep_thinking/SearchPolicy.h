@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include "EmployeeDB.h"
 #include "EmployeeInfo.h"
 
 using namespace std;
@@ -15,6 +16,9 @@ public:
 	const string SEARCH_BIRTH_DAY_STR{ "-d" };
 	const string SEARCH_BIRTH_MONTH_STR{ "-m" };
 	const string SEARCH_BIRTH_YEAR_STR{ "-y" };
+	const string SEARCH_PHONENUMBER_MID_STR{ "-m" };
+	const string SEARCH_PHONENUMBER_LAST_STR{ "-l" };
+
 
 	vector<string> search_base(const map<string, EmployeeInfo>& employeeDict , function<bool (EmployeeInfo)> isMatched) {
 		vector<string> result;
@@ -30,7 +34,6 @@ public:
 		return result;
 	}
 	virtual vector<string> search(const map<string, EmployeeInfo>& employeeInfo, const vector<string>& parsedCmds)  = 0;
-	
 };
 
 class SearhById : public Search {
@@ -57,11 +60,11 @@ class SearhByPhoneNumber : public Search {
 private:
 	virtual vector<string> search(const map<string, EmployeeInfo>& employeeInfo, const vector<string>& parsedCmds)  override {
 		string key = parsedCmds[SEARCH_KEY_IDX];
-		if (parsedCmds[SEARCH_OPTION_KEY_IDX] == "-m") {
+		if (parsedCmds[SEARCH_OPTION_KEY_IDX] == SEARCH_PHONENUMBER_MID_STR) {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
 				return employA.getPhoneNum().substr(4, 4) == key; });
 		}
-		else if (parsedCmds[SEARCH_OPTION_KEY_IDX] == "-l") {
+		else if (parsedCmds[SEARCH_OPTION_KEY_IDX] == SEARCH_PHONENUMBER_LAST_STR) {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
 				return employA.getPhoneNum().substr(9, 4) == key; });
 		}

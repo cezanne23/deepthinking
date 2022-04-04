@@ -14,7 +14,7 @@ public:
 		stringstream ss(str);
 		string word;
 
-		while (getline(ss, word, disc)){ // ',')) {
+		while (getline(ss, word, disc)) { // ',')) {
 			while (' ' == word[0])  word.erase(0, 1);
 			result.push_back(word);
 		}
@@ -40,26 +40,11 @@ public:
 		searchPolicyList.insert({ PHONENUM, new SearhByPhoneNumber() });
 
 	};
-	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
-		const vector<string>&parsedCmds);
-		/*
-	map<EmployeeNum, EmployInfo>
-	multimap<Name, EmployInfo>
-	multimap<FirstName, EmployInfo>
-	multimap<LastName, EmployInfo>
-	multimap<CL, EmployInfo>
-	multimap<PhoneNum, EmployInfo>
-	multimap<PhoneMiddleNum, EmployInfo>
-	multimap<PhoneLastNum, EmployInfo>
-	multimap<BirthDate, EmployInfo>
-	multimap<BirthYear, EmployInfo>
-	multimap<BirthMonth, EmployInfo>
-	multimap<BirthDay, EmployInfo>
-	multimap<Certi, EmployInfo>
-	*/
+	vector<string> searchID(const map<string, EmployeeInfo>& employeeInfo,
+		const vector<string>& parsedCmds);
 
 	template <typename T1>
-	vector<EmployeeInfo> search(const T1 database, const int condition) ;
+	vector<EmployeeInfo> search(const T1 database, const int condition);
 
 private:
 	map<string, Search*> searchPolicyList;
@@ -76,15 +61,20 @@ private:
 
 class SearchEngine { // Interface class
 public:
+	SearchEngine() { employDB = &EmployeeDB::getDB(); };
 	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
 		const vector<string>& parsedCmds) {
-		return internalEngine.seachID(employeeInfo, parsedCmds);
+		return internalEngine.searchID(employeeInfo, parsedCmds);
+	};
+	vector<string> searchID(const vector<string>& parsedCmds) {
+		return internalEngine.searchID(employDB->employeeList, parsedCmds);
 	};
 	vector<EmployeeInfo*> seachEmployee(const map<string, EmployeeInfo>& employeeInfo,
 		const vector<string>& parsedCmds);
 	vector<EmployeeInfo*> seachEmployee(const vector<string>& parsedCmds);
 private:
 	SearchEngineCore internalEngine;
+	EmployeeDB* employDB;
 };
 
 
