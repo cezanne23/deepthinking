@@ -20,7 +20,7 @@ string DeleteCommand::runCmd(vector<string>& command) {
     vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
     string displayRecord;
     for (const auto& employeeNum : searchResult) {
-        if (command[CMD_DISPLAY_RECORD] == "-p") 
+        if (command[CMD_DISPLAY_RECORD] == "-p")
             displayRecord += "DEL," + employeeDB->employeeList[employeeNum].getString() + "\n";
         employeeDB->employeeList.erase(employeeNum);
     }

@@ -18,12 +18,12 @@ public:
     }
 
     const string getEmployeeNum() const { return employeeNum_; }
-    const string getName() const { return firstName_ + " "  + lastName_; }
+    const string getName() const { return firstName_ + " " + lastName_; }
     const string getFirstName() const { return firstName_; }
     const string getLastName() const { return lastName_; }
     const string getLevel() const { return level_; }
 
-    const string getPhoneNum() const { 
+    const string getPhoneNum() const {
         if (phoneMidNum_.size() > 0 && phoneLastNum_.size() > 0) {
             return "010-" + phoneMidNum_ + "-" + phoneLastNum_;
         }
@@ -33,14 +33,15 @@ public:
     const string getPhoneLastNum() const { return phoneLastNum_; }
 
     const string getBirthDate() const { return birthYear_ + birthMonth_ + birthDay_; }
-    const string getBirthYear() const { return birthYear_ ; }
+    const string getBirthYear() const { return birthYear_; }
     const string getBirthMonth() const { return birthMonth_; }
     const string getBirthDay() const { return birthDay_; }
     const string getCerti() const { return certi_; }
 
-    const string getString() const { 
-        return getEmployeeNum()+ "," + getName() + "," + getLevel() + "," + getPhoneNum()
-            +"," + getBirthDate() + "," + getCerti(); }
+    const string getString() const {
+        return getEmployeeNum() + "," + getName() + "," + getLevel() + "," + getPhoneNum()
+            + "," + getBirthDate() + "," + getCerti();
+    }
 
     bool operator== (const EmployeeInfo& info) const {
         return (employeeNum_ == info.getEmployeeNum()
@@ -99,7 +100,7 @@ private:
     }
 
     void initPhoneNum(string phoneNum) {
-        vector<string> phoneNumList = StringSplitter().splitString(phoneNum,  '-');
+        vector<string> phoneNumList = StringSplitter().splitString(phoneNum, '-');
 
         if (phoneNumList.size() < 3 || phoneNumList[0] != "010") {
             cout << "invalid phoneNumber format";
