@@ -1,3 +1,3 @@
 #pragma once
 
-class EmployeeInfo {};
+// class EmployeeInfo {};
