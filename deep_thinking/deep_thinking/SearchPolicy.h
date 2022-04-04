@@ -69,7 +69,7 @@ private:
 		string key = parsedCmds[SEARCH_KEY_IDX];
 		if (parsedCmds[2] == "-d") {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
-				return employA.getBirthYear() == key; });
+				return employA.getBirthDay() == key; });
 		}
 		else if (parsedCmds[2] == "-m") {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
@@ -77,7 +77,7 @@ private:
 		}
 		else if (parsedCmds[2] == "-y") {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
-				return employA.getBirthDay() == key; });
+				return employA.getBirthYear() == key; });
 		}
 	};
 };
