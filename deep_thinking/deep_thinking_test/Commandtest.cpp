@@ -172,7 +172,7 @@ TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
         "ADD, , , ,18050303,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "DEL, , , ,birthday,19980906"),
-        "2");
+        "DEL,-p, , ,birthday,19980906"),
+        "DEL,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO\nDEL,18050303,AAAA BBBB,CL3,010-9777-6055,19980906,PRO");
 }
 
