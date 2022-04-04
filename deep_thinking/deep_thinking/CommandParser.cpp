@@ -1,21 +1,6 @@
 #include "CommandParser.h"
 #include "ArgumentChecker.h"
-
-void CommandParser::splitCommand(const string& command, const string separator) {
-	size_t sPos = 0;
-	size_t ePos = command.find(separator);
-	string subString{};
-
-	ePos = command.find(separator, sPos);
-
-	while (ePos != string::npos) {
-		subString = command.substr(sPos, ePos - sPos);
-		arguments_.emplace_back(subString);
-		sPos = ePos + 1;
-		ePos = command.find(separator, sPos);
-	}
-}
-
+#include "StringSplitter.h"
 
 bool CommandParser::validateArguments(const vector<string>& arguments) {
 	string command = arguments[0];
@@ -51,7 +36,7 @@ bool CommandParser::validateArguments(const vector<string>& arguments) {
 				continue;
 			}
 			else {
-				cout << "[DEBUG] failed on validateAddCommand : " << checker->get_argument_name() << endl;
+				cout << "[DEBUG] failed on validateAddCommand : " << checker->getArgumentName() << endl;
 				return false;
 			}
 		}
@@ -63,6 +48,6 @@ bool CommandParser::validateArguments(const vector<string>& arguments) {
 
 const vector<string>& CommandParser::parseCommand(string command) {
 	arguments_.clear();
-	splitCommand(command + separator_, separator_);
+	arguments_ = StringSplitter().splitString(command, separator_);
 	return arguments_;
 }

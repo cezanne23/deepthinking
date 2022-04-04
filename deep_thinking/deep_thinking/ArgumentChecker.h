@@ -10,7 +10,7 @@ class ArgumentChecker {
 public:
 	ArgumentChecker(const string& command) : argument_name_(command) {}
 	virtual bool check(const string& argument) const = 0;
-	const string& get_argument_name() {
+	const string& getArgumentName() {
 		return argument_name_;
 	}
 protected:
@@ -19,7 +19,7 @@ protected:
 
 class EmployNumChecker : public ArgumentChecker {
 public:
-	EmployNumChecker() : ArgumentChecker("employNum") {}
+	EmployNumChecker() : ArgumentChecker("employeeNum") {}
 	virtual bool check(const string& argument) const override  {
 		size_t employ_number = stol(argument);
 		if ((0 <= employ_number && employ_number < 22000000UL) || 69000000UL <= employ_number && employ_number < 100000000UL) {
@@ -95,4 +95,3 @@ public:
 private:
 	const vector<string> certifications_ = { "ADV", "PRO", "EX" };
 };
-
