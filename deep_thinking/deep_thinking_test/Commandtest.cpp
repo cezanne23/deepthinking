@@ -132,7 +132,7 @@ TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL, , , ,name,AAAA CCCC"),
-        "0");
+        "NONE");
 }
 
 TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {

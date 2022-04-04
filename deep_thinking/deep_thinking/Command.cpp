@@ -24,7 +24,8 @@ string DeleteCommand::runCmd(vector<string>& command) {
     //for (const auto& item : employeeDB->employeeList) {
     //    cout << item.first << " " << item.second << endl;
     //}
-    return to_string(searchList.size());
+    if (searchList.size()) return to_string(searchList.size());
+    else return "NONE";
 };
 
 string ModifyCommand::runCmd(vector<string>& command) {
