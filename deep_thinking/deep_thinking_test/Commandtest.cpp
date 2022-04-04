@@ -85,7 +85,7 @@ SCH,12486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
     // 수정 Test
 
     command = commandParser.parseCommand("MOD,-p, , ,name,KYUMOK KIM,name,KYUMOK LEE");
-    EXPECT_EQ(modifyCommand.runCmd(command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
+    EXPECT_EQ(modifyCommand.runCmd(command), "MOD,96486152,KYUMOK KIM,CL2,010-3355-7888,19780806,PRO" );
 
 }
 
