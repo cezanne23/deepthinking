@@ -156,6 +156,7 @@
     <ClInclude Include="SearchEngine.h" />
     <ClInclude Include="SearchPolicy.h" />
     <ClInclude Include="FileController.h" />
+    <ClInclude Include="Sorting.h" />
     <ClInclude Include="StringSplitter.h" />
     <ClInclude Include="EmployeeDB.h" />
   </ItemGroup>
