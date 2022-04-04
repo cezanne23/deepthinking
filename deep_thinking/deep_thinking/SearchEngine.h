@@ -29,9 +29,9 @@ public:
 private:
 };
 
-class SearchEngine {
+class SearchEngineCore {
 public:
-	SearchEngine() {
+	SearchEngineCore() {
 		searchPolicyList.insert({ EMPLOYEENUM, new SearhById() });
 		searchPolicyList.insert({ NAME, new SearhByName() });
 		searchPolicyList.insert({ BIRTHDAY, new SearhByBirth() });
@@ -41,7 +41,25 @@ public:
 
 	};
 	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
-		const vector<string>& parsedCmds);
+		const vector<string>&parsedCmds);
+		/*
+	map<EmployeeNum, EmployInfo>
+	multimap<Name, EmployInfo>
+	multimap<FirstName, EmployInfo>
+	multimap<LastName, EmployInfo>
+	multimap<CL, EmployInfo>
+	multimap<PhoneNum, EmployInfo>
+	multimap<PhoneMiddleNum, EmployInfo>
+	multimap<PhoneLastNum, EmployInfo>
+	multimap<BirthDate, EmployInfo>
+	multimap<BirthYear, EmployInfo>
+	multimap<BirthMonth, EmployInfo>
+	multimap<BirthDay, EmployInfo>
+	multimap<Certi, EmployInfo>
+	*/
+
+	template <typename T1>
+	vector<EmployeeInfo> search(const T1 database, const int condition) ;
 
 private:
 	map<string, Search*> searchPolicyList;
@@ -55,3 +73,18 @@ private:
 	const char CMD_DISC{ ',' };
 	const int SEARCH_OPTION_IDX = 4;
 };
+
+class SearchEngine { // Interface class
+public:
+	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
+		const vector<string>& parsedCmds) {
+		return internalEngine.seachID(employeeInfo, parsedCmds);
+	};
+	vector<EmployeeInfo*> seachEmployee(const map<string, EmployeeInfo>& employeeInfo,
+		const vector<string>& parsedCmds);
+	vector<EmployeeInfo*> seachEmployee(const vector<string>& parsedCmds);
+private:
+	SearchEngineCore internalEngine;
+};
+
+

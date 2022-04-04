@@ -11,6 +11,11 @@ using namespace std;
 class Search {
 public:
 	const int SEARCH_KEY_IDX = 5;
+	const int SEARCH_OPTION_KEY_IDX = 2;
+	const string SEARCH_BIRTH_DAY_STR{ "-d" };
+	const string SEARCH_BIRTH_MONTH_STR{ "-m" };
+	const string SEARCH_BIRTH_YEAR_STR{ "-y" };
+
 	vector<string> search_base(const map<string, EmployeeInfo>& employeeDict , function<bool (EmployeeInfo)> isMatched) {
 		vector<string> result;
 
@@ -52,11 +57,11 @@ class SearhByPhoneNumber : public Search {
 private:
 	virtual vector<string> search(const map<string, EmployeeInfo>& employeeInfo, const vector<string>& parsedCmds)  override {
 		string key = parsedCmds[SEARCH_KEY_IDX];
-		if (parsedCmds[2] == "-m") {
+		if (parsedCmds[SEARCH_OPTION_KEY_IDX] == "-m") {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
 				return employA.getPhoneNum().substr(4, 4) == key; });
 		}
-		else if (parsedCmds[2] == "-l") {
+		else if (parsedCmds[SEARCH_OPTION_KEY_IDX] == "-l") {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
 				return employA.getPhoneNum().substr(9, 4) == key; });
 		}
@@ -67,15 +72,15 @@ class SearhByBirth : public Search {
 private:
 	virtual vector<string> search(const map<string, EmployeeInfo>& employeeInfo, const vector<string>& parsedCmds)  override {
 		string key = parsedCmds[SEARCH_KEY_IDX];
-		if (parsedCmds[2] == "-d") {
+		if (parsedCmds[SEARCH_OPTION_KEY_IDX] == SEARCH_BIRTH_DAY_STR) {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
 				return employA.getBirthDay() == key; });
 		}
-		else if (parsedCmds[2] == "-m") {
+		else if (parsedCmds[SEARCH_OPTION_KEY_IDX] == SEARCH_BIRTH_MONTH_STR) {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
 				return employA.getBirthMonth() == key; });
 		}
-		else if (parsedCmds[2] == "-y") {
+		else if (parsedCmds[SEARCH_OPTION_KEY_IDX] == SEARCH_BIRTH_YEAR_STR) {
 			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
 				return employA.getBirthYear() == key; });
 		}
