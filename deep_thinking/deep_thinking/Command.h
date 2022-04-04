@@ -13,7 +13,14 @@ public:
     }
     virtual string runCmd(vector<string>& command) = 0;
     const int CMD_DISPLAY_RECORD = 1;
-
+    const int MAX_DISPLAY_RECORD_SIZE = 5;
+    string convertToString(vector<string> strList) {
+        string result;
+        for (const auto& str : strList) {
+            result += str + "\n";
+        }
+        return result.substr(0, result.size() - 1);
+    }
 protected:
     SearchEngine searchEngine;
     EmployeeDB* employeeDB;
