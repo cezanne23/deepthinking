@@ -48,6 +48,7 @@
     </ClCompile>
     <ClCompile Include="EmployeeManagerTest.cpp" />
     <ClCompile Include="CommandParserTest.cpp" />
+    <ClCompile Include="StringSplitterTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
