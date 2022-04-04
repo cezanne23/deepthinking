@@ -128,10 +128,10 @@ TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
         "ModifyCommand");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "SCH, , , ,NAME,AAAA CCCC"),
+        "SCH, , , ,name,AAAA CCCC"),
         "SearchCommand");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "DEL, , , ,NAME,AAAA CCCC"),
+        "DEL, , , ,name,AAAA CCCC"),
         "DeleteCommand");
 }

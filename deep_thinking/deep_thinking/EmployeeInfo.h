@@ -63,6 +63,20 @@ public:
         return os;
     }
 
+    bool operator < (const EmployeeInfo& info) const {
+        if (getULemployeeNum(getEmployeeNum()) < getULemployeeNum(info.getEmployeeNum())) {
+            return true;
+        }
+        return false;
+    }
+
+    bool operator > (const EmployeeInfo& info) const {
+        if (getULemployeeNum(getEmployeeNum()) > getULemployeeNum(info.getEmployeeNum())) {
+            return true;
+        }
+        return false;
+    }
+
 private:
     void initName(string name) {
         istringstream iss(name);
@@ -89,6 +103,18 @@ private:
         }
         phoneMidNum_ = phoneNumList[1];
         phoneLastNum_ = phoneNumList[2];
+    }
+
+    size_t getULemployeeNum(const string& employeeNum) const {
+        const size_t numThreshold = 69000000;
+        size_t employeeNum_UL = stoul(employeeNum.c_str());
+        if (employeeNum_UL < numThreshold) {
+            employeeNum_UL += numThreshold;
+        }
+        else {
+            employeeNum_UL -= numThreshold;
+        }
+        return employeeNum_UL;
     }
 
     string employeeNum_;
