@@ -61,7 +61,7 @@ private:
 
 class SearchEngine { // Interface class
 public:
-	SearchEngine() { employDB = &EmployeeDB::getDB(); };
+	SearchEngine() { employDB = EmployeeDB::getDB(); };
 	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
 		const vector<string>& parsedCmds) {
 		return internalEngine.searchID(employeeInfo, parsedCmds);
