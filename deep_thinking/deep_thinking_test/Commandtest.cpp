@@ -121,5 +121,17 @@ TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "ADD, , , ,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
-        "ExcuteCommand" /*TODO: ""*/);
+        "");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD, , , ,cl,CL3,name,AAAA CCCC"),
+        "ModifyCommand");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "SCH, , , ,name,AAAA CCCC"),
+        "SearchCommand");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "DEL, , , ,name,AAAA CCCC"),
+        "DeleteCommand");
 }

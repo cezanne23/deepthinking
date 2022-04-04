@@ -3,6 +3,7 @@
 #include <map>
 #include "EmployeeInfo.h"
 #include "SearchEngine.h"
+#include "CommandParser.h"
 
 using namespace std;
 

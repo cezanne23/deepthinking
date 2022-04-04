@@ -41,8 +41,8 @@ public:
 
 	};
 	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
-		const string condition);
-	/*
+		const vector<string>&parsedCmds);
+		/*
 	map<EmployeeNum, EmployInfo>
 	multimap<Name, EmployInfo>
 	multimap<FirstName, EmployInfo>
