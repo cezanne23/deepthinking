@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include "EmployeeDB.h"
 #include "EmployeeInfo.h"
 
 using namespace std;
