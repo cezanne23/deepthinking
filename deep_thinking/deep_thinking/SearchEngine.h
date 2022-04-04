@@ -40,7 +40,7 @@ public:
 		searchPolicyList.insert({ PHONENUM, new SearhByPhoneNumber() });
 
 	};
-	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
+	vector<string> searchID(const map<string, EmployeeInfo>& employeeInfo,
 		const vector<string>& parsedCmds);
 
 	template <typename T1>
@@ -64,10 +64,10 @@ public:
 	SearchEngine() { employDB = &EmployeeDB::getDB(); };
 	vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
 		const vector<string>& parsedCmds) {
-		return internalEngine.seachID(employeeInfo, parsedCmds);
+		return internalEngine.searchID(employeeInfo, parsedCmds);
 	};
-	vector<string> seachID(const vector<string>& parsedCmds) {
-		return internalEngine.seachID(employDB->employeeList, parsedCmds);
+	vector<string> searchID(const vector<string>& parsedCmds) {
+		return internalEngine.searchID(employDB->employeeList, parsedCmds);
 	};
 	vector<EmployeeInfo*> seachEmployee(const map<string, EmployeeInfo>& employeeInfo,
 		const vector<string>& parsedCmds);

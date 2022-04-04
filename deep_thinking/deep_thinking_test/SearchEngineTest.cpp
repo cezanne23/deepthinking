@@ -46,26 +46,31 @@ TEST_F(SearchEngineSingletonDBTest, singletonDBSizeTest) {
 	vector<string> res;
 	InputParcer parser;
 
-	res = searchEngine.seachID(parser.split("DEL, , , ,employeeNum,18115040", ','));
+	res = searchEngine.searchID(parser.split("DEL, , , ,employeeNum,18115040", ','));
+	ASSERT_EQ(res.size(), 1);
+	EXPECT_EQ(res[0], "18115040");
+	res.clear();;
+
+	res = searchEngine.searchID(parser.split("DEL, , , ,employeeNum,18115040", ','));
 	ASSERT_EQ(res.size(), 1);
 	EXPECT_EQ(res[0], "18115040");
 	res.clear();
 
-	res = searchEngine.seachID(parser.split("SCH,-p,-d, ,birthday,04", ','));
+	res = searchEngine.searchID(parser.split("SCH,-p,-d, ,birthday,04", ','));
 	ASSERT_EQ(res.size(), 1);
 	EXPECT_EQ(res[0], "02117175");
 	res.clear();
 
-	res = searchEngine.seachID(parser.split("SCH, , , ,employeeNum,79110836", ','));
+	res = searchEngine.searchID(parser.split("SCH, , , ,employeeNum,79110836", ','));
 	ASSERT_EQ(res.size(), 0);
 	res.clear();
 
-	res = searchEngine.seachID(parser.split("DEL, , , ,employeeNum,18115040", ','));
+	res = searchEngine.searchID(parser.split("DEL, , , ,employeeNum,18115040", ','));
 	ASSERT_EQ(res.size(), 1);
 	EXPECT_EQ(res[0], "18115040");
 	res.clear();
 
-	res = searchEngine.seachID(parser.split("SCH,-p, , ,certi,PRO", ','));
+	res = searchEngine.searchID(parser.split("SCH,-p, , ,certi,PRO", ','));
 	ASSERT_EQ(res.size(), 12);
 	/* todo where to search sort, searchEngine or output print */
 #ifdef NOTRUN
@@ -77,11 +82,11 @@ TEST_F(SearchEngineSingletonDBTest, singletonDBSizeTest) {
 #endif
 	res.clear();
 
-	res = searchEngine.seachID(parser.split("SCH, , , ,certi,ADV", ','));
+	res = searchEngine.searchID(parser.split("SCH, , , ,certi,ADV", ','));
 	ASSERT_EQ(res.size(), 8);
 	res.clear();
 
-	res = searchEngine.seachID(parser.split("SCH,-p, , ,cl,CL4", ','));
+	res = searchEngine.searchID(parser.split("SCH,-p, , ,cl,CL4", ','));
 	ASSERT_EQ(res.size(), 9);
 	/* todo where to search sort, searchEngine or output print */
 #ifdef NOTRUN
@@ -93,13 +98,23 @@ TEST_F(SearchEngineSingletonDBTest, singletonDBSizeTest) {
 #endif
 	res.clear();
 
-	res = searchEngine.seachID(parser.split("SCH, ,-m, ,birthday,09", ','));
+	res = searchEngine.searchID(parser.split("SCH, ,-m, ,birthday,09", ','));
 	ASSERT_EQ(res.size(), 1);
 	res.clear();
 
-	res = searchEngine.seachID(parser.split("MOD,-p, , ,name,FB NTAWR,cl,CL3", ','));
+	res = searchEngine.searchID(parser.split("MOD,-p, , ,name,FB NTAWR,cl,CL3", ','));
 	ASSERT_EQ(res.size(), 1);
 	EXPECT_EQ(res[0], "17112609");
+	res.clear();
+
+	res = searchEngine.searchID(parser.split("SCH, -p, -m, , phoneNum, 3112", ','));
+	ASSERT_EQ(res.size(), 1);
+	EXPECT_EQ(res[0], "15123099");
+	res.clear();
+
+	res = searchEngine.searchID(parser.split("SCH, -p, -l, , phoneNum, 8566", ','));
+	ASSERT_EQ(res.size(), 1);
+	EXPECT_EQ(res[0], "11109136");
 	res.clear();
 }
 
