@@ -29,7 +29,7 @@ string ModifyCommand::runCmd(map<string, EmployeeInfo>& employeeInfo, vector<str
 };
 
 string SearchCommand::runCmd(map<string, EmployeeInfo>& employeeInfo, vector<string>& command) {
-    // vector<string> result = searchEngine.seachID(employeeInfo, command);
+    vector<string> searchIdList = searchEngine.seachID(employeeInfo, command);
     
     return "SearchCommand";
 };
