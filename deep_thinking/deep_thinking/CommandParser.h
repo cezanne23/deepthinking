@@ -18,9 +18,7 @@ public:
 
 private:
 	const int max_num_argument_ = 16;
-	const string separator_ = ",";
-	const string empty = " ";
+	const char separator_ = ',';
+	const char empty = ' ';
 	vector<string> arguments_;
-
-	void splitCommand(const string& command, const string separator);
 };
