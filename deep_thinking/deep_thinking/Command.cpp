@@ -36,10 +36,11 @@ string ModifyCommand::runCmd(vector<string>& command) {
 	vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
 	vector<string> displayRecord;
 
+    if (command[CMD_DISPLAY_RECORD] == "-p") {
+        displayRecord = displayEmployeeInfo(searchResult, "MOD");
+    }
+
 	for (const auto& employeeNum : searchResult) {
-		if (command[CMD_DISPLAY_RECORD] == "-p" && displayRecord.size() < MAX_DISPLAY_RECORD_SIZE) {
-			displayRecord.push_back("MOD," + employeeDB->employeeList[employeeNum].getString());
-		}
 		// todo refactoring
 		if (command[MOD_TARGET_KEY_IDX] == EMPLOYEENUM) {
 			// requirement: should not change id
