@@ -3,6 +3,8 @@
 
 using namespace std;
 
+
+
 string AddCommand::runCmd(map<string, EmployeeInfo>& employeeInfo, vector<string>& command) {
     // todo 별도 class 정의 필요
     EmployeeInfo employee{ command[ADD_CMD_EMPLOYEENUM_INFO_IDX],
@@ -27,6 +29,7 @@ string ModifyCommand::runCmd(map<string, EmployeeInfo>& employeeInfo, vector<str
 };
 
 string SearchCommand::runCmd(map<string, EmployeeInfo>& employeeInfo, vector<string>& command) {
-
+    // vector<string> result = searchEngine.seachID(employeeInfo, command);
+    
     return "SearchCommand";
 };
