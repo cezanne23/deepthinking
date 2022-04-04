@@ -70,7 +70,7 @@ TEST_F(SearchEngineTest, scenariTest) {
 	ASSERT_EQ(res.size(), 12);
 	/* todo where to search sort, searchEngine or output print */
 #ifdef NOTRUN
-		
+
 	EXPECT_EQ(res[0], "88114052");
 	EXPECT_EQ(res[1], "01122329");
 	EXPECT_EQ(res[2], "02117175");
@@ -95,7 +95,7 @@ TEST_F(SearchEngineTest, scenariTest) {
 #endif
 	res.clear();
 
-	res = searchEngine.seachID(employeeInfoDict, parser.split("SCH, ,-m, ,birthday,09",','));
+	res = searchEngine.seachID(employeeInfoDict, parser.split("SCH, ,-m, ,birthday,09", ','));
 	ASSERT_EQ(res.size(), 1);
 	res.clear();
 
@@ -139,8 +139,8 @@ TEST_F(SearchEnginePerformanceTest, maxDBsearchTest) {
 	ret.clear();
 
 
-	incmd  = "SCH, , , ,employeeNum,10099999";
-	exp.push_back( "10099999" );
+	incmd = "SCH, , , ,employeeNum,10099999";
+	exp.push_back("10099999");
 	ret = searchEngine.seachID(employeeInfoDict, parser.split(incmd, ','));
 
 	EXPECT_EQ(exp, ret);

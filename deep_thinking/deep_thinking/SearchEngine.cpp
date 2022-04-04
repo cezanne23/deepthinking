@@ -1,7 +1,7 @@
 
 #include "SearchEngine.h"
 
-vector<string> SearchEngine::seachID(const map<string, EmployeeInfo>& employeeInfo,
+vector<string> SearchEngineCore::seachID(const map<string, EmployeeInfo>& employeeInfo,
 	const vector<string>& parsedCmds) {
 	string serchOptionStr = parsedCmds[SEARCH_OPTION_IDX];
 	vector<string> result = searchPolicyList[serchOptionStr]->search(employeeInfo, parsedCmds);
