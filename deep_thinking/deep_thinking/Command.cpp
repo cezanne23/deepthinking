@@ -3,18 +3,6 @@
 
 using namespace std;
 
-bool EmployeeNumCmp(const string& A, const string& B)
-{
-    unsigned long long int aUL = stoi(A);
-    unsigned long long int bUL = stoi(B);
-
-    if (aUL < 69000000) {
-        aUL += 100000000;
-    }
-
-    return (aUL < bUL);
-}
-
 string AddCommand::runCmd(vector<string>& command) {
     // todo 별도 class 정의 필요
     EmployeeInfo employee{ command[ADD_CMD_EMPLOYEENUM_INFO_IDX],
@@ -47,6 +35,9 @@ string ModifyCommand::runCmd(vector<string>& command) {
 string SearchCommand::runCmd(vector<string>& command) {
     string result = "";
     vector<string> searchIdList;
+    vector<EmployeeInfo> employeeInfoList;
+    vector<EmployeeInfo> employeeInfoListTop5;
+    vector<string> strList;
 
     searchIdList = searchEngine.searchID(command);
 
@@ -54,17 +45,23 @@ string SearchCommand::runCmd(vector<string>& command) {
         return result = "SCH,NONE";
     }
 
-    searchIdList = sortForEmployNum(searchIdList);
-
     if (command[SCH_CMD_PRINT_INFO_IDX] == "-p")
     {
-        EmployeeInfo employeeInfo;
         for (const string& employeeNum : searchIdList)
         {
-            employeeInfo = employeeDB->employeeList.find(employeeNum)->second;
-            result += ("SCH," + employeeInfo.getEmployeeNum() + "," + employeeInfo.getName() + "," + employeeInfo.getLevel()
+            employeeInfoList.push_back(employeeDB->employeeList.find(employeeNum)->second);
+        }
+
+        priorityQueue.sort(employeeInfoList);
+
+        employeeInfoListTop5 = priorityQueue.getTopk();
+
+        for (const EmployeeInfo& employeeInfo : employeeInfoListTop5)
+        {
+            strList.push_back("SCH," + employeeInfo.getEmployeeNum() + "," + employeeInfo.getName() + "," + employeeInfo.getLevel()
                 + "," + employeeInfo.getPhoneNum() + "," + employeeInfo.getBirthDate() + "," + employeeInfo.getCerti());
         }
+        result = convertToString(strList);
     }
     else if (command[SCH_CMD_PRINT_INFO_IDX] == " ") {
         result = ("SCH," + to_string(searchIdList.size()));

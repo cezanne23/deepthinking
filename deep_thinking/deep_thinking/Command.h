@@ -5,6 +5,7 @@
 #include "SearchEngine.h"
 #include "CommandParser.h"
 #include "EmployeeDB.h"
+#include "Sorting.h"
 
 using namespace std;
 
@@ -12,16 +13,10 @@ bool EmployeeNumCmp(const string& A, const string& B);
 
 class ICommand {
 public:
-	ICommand() : employeeDB(&EmployeeDB::getDB()) {
+	ICommand() : employeeDB(EmployeeDB::getDB()) {
 	}
 	virtual string runCmd(vector<string>& command) = 0;
 
-	vector<string>& sortForEmployNum(vector<string>& emplyNumList) {
-
-		sort(emplyNumList.begin(), emplyNumList.end(), EmployeeNumCmp);
-
-		return emplyNumList;
-	}
 protected:
 	SearchEngine searchEngine;
 	EmployeeDB* employeeDB;
@@ -55,5 +50,14 @@ public:
 	virtual string runCmd(vector<string>& command) override;
 
 private:
+	PriorityQueue priorityQueue;
 	const int SCH_CMD_PRINT_INFO_IDX = 1;
+
+	string convertToString(vector<string> strList) {
+		string result;
+		for (const auto& str : strList) {
+			result += str + "\n";
+		}
+		return result.substr(0, result.size() - 1);
+	}
 };
