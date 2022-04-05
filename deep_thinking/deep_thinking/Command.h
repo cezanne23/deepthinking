@@ -35,10 +35,6 @@ public:
         }
         return displayRecord;
     }
-
-protected:
-    SearchEngine searchEngine;
-    EmployeeDB* employeeDB;
     const string EMPLOYEENUM{ "employeeNum" };
     const string BIRTHDAY{ "birthday" };
     const string NAME{ "name" };
@@ -46,8 +42,13 @@ protected:
     const string CL{ "cl" };
     const string PHONENUM{ "phoneNum" };
     const char CMD_DISC{ ',' };
-    const int MOD_TARGET_KEY_IDX = 6; 
+    const int MOD_TARGET_KEY_IDX = 6;
     const int MOD_TARGET_VALUE_IDX = 7;
+
+protected:
+    SearchEngine searchEngine;
+    EmployeeDB* employeeDB;
+    
     PriorityQueue priorityQueue;
 };
 
@@ -69,9 +70,48 @@ public:
     virtual string runCmd(vector<string>& command) override;
 };
 
+class MODUpdate { 
+public:
+    virtual void update( EmployeeInfo& enployeeInfo, string value)  = 0;
+};
+
+class MODUpdateName : public MODUpdate {
+    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setName(value);}
+};
+
+class MODUpdateLevel : public MODUpdate {
+    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setLevel(value); }
+};
+
+class MODUpdatePhoneNum : public MODUpdate {
+    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setPhoneNum(value); }
+};
+
+class MODUpdateBirth : public MODUpdate {
+    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setBirthDate(value); }
+};
+
+class MODUpdateCerti : public MODUpdate {
+    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setCerti(value); }
+};
+
+class MODUpdateEmployeeNum : public MODUpdate {
+    virtual void update(EmployeeInfo& enployeeInfo, string value) override { /* no nothing*/ }
+};
+
 class ModifyCommand : public ICommand {
 public:
+    ModifyCommand() { 
+        updateList.insert({ NAME , new MODUpdateName });
+        updateList.insert({ CL , new MODUpdateLevel});
+        updateList.insert({ PHONENUM , new MODUpdatePhoneNum });
+        updateList.insert({ BIRTHDAY , new MODUpdateBirth });
+        updateList.insert({ CERTI , new MODUpdateCerti });
+        updateList.insert({ EMPLOYEENUM , new MODUpdateEmployeeNum });
+    };
     virtual string runCmd(vector<string>& command) override;
+private:
+    map<string, MODUpdate*> updateList;
 };
 
 class SearchCommand : public ICommand {
