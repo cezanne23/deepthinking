@@ -154,6 +154,7 @@
     <ClInclude Include="EmployeeInfoManager.h" />
     <ClInclude Include="ArgumentChecker.h" />
     <ClInclude Include="CommandParser.h" />
+    <ClInclude Include="OptionParser.h" />
     <ClInclude Include="SearchEngine.h" />
     <ClInclude Include="SearchPolicy.h" />
     <ClInclude Include="FileController.h" />
