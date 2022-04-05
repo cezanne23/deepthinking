@@ -33,7 +33,44 @@ string DeleteCommand::runCmd(vector<string>& command) {
 };
 
 string ModifyCommand::runCmd(vector<string>& command) {
-    return "ModifyCommand";
+	vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
+	vector<string> displayRecord;
+
+    if (command[CMD_DISPLAY_RECORD] == "-p") {
+        displayRecord = displayEmployeeInfo(searchResult, "MOD");
+    }
+
+	for (const auto& employeeNum : searchResult) {
+		// todo refactoring
+		if (command[MOD_TARGET_KEY_IDX] == EMPLOYEENUM) {
+			// requirement: should not change id
+            // employeeDB->employeeList[employeeNum].setEmployeeNum(command[MOD_TARGET_VALUE_IDX]);
+		}
+		else if (command[MOD_TARGET_KEY_IDX] == BIRTHDAY) {
+			employeeDB->employeeList[employeeNum].setEmployeeNum(command[MOD_TARGET_VALUE_IDX]);
+		}
+		else if (command[MOD_TARGET_KEY_IDX] == NAME) {
+			employeeDB->employeeList[employeeNum].setName(command[MOD_TARGET_VALUE_IDX]);
+		}
+		else if (command[MOD_TARGET_KEY_IDX] == CERTI) {
+			employeeDB->employeeList[employeeNum].setCerti(command[MOD_TARGET_VALUE_IDX]);
+		}
+		else if (command[MOD_TARGET_KEY_IDX] == CL) {
+			employeeDB->employeeList[employeeNum].setLevel(command[MOD_TARGET_VALUE_IDX]);
+		}
+		else if (command[MOD_TARGET_KEY_IDX] == PHONENUM) {
+			employeeDB->employeeList[employeeNum].setPhoneNum(command[MOD_TARGET_VALUE_IDX]);
+		}
+		else { // exception
+			throw;
+		}
+	}
+
+	if (displayRecord.size() > 0)
+		return convertToString(displayRecord);
+	if (searchResult.size())
+		return string("MOD,") + to_string(searchResult.size());
+	return "MOD,NONE";
 };
 
 string SearchCommand::runCmd(vector<string>& command) {
