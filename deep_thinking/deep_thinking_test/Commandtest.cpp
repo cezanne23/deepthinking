@@ -4,7 +4,9 @@
 
 class CommandRunTest : public ::testing::Test {
 protected:
-    void SetUp() override {}
+    void SetUp() override {
+        EmployeeDB::getDB()->employeeList.clear();
+    }
 
     void TearDown() override {}
     AddCommand addCommand;
@@ -15,7 +17,7 @@ protected:
 
 TEST_F(CommandRunTest, CommandTC) {
     vector<string> command;
-
+    
     // 3명의 Employee 추가
     command.clear();
     command.push_back("ADD");
@@ -176,7 +178,7 @@ TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL, , , ,name,AAAA CCCC"),
-        "NONE");
+        "DEL,NONE");
 }
 
 TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
@@ -210,25 +212,24 @@ TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
         "ADD, , , ,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050302,AAAA CCCC,CL3,010-9777-6056,19981206,PRO"),
+        "ADD, , , ,18050302,AAAA CCCC,CL3,010-9777-6056,19971206,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050303,AAAA BBBB,CL3,010-9777-6057,19980906,PRO"),
+        "ADD, , , ,18050305,AAAA BBBB,CL3,010-9777-6057,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050304,AAAA BBBB,CL3,010-9777-6058,19980906,PRO"),
+        "ADD, , , ,18050307,AAAA BBBB,CL3,010-9777-6058,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050305,AAAA BBBB,CL3,010-9777-6059,19980906,PRO"),
+        "ADD, , , ,18050304,AAAA BBBB,CL3,010-9777-6059,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "ADD, , , ,18050306,AAAA BBBB,CL3,010-9777-6010,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050307,AAAA BBBB,CL3,010-9000-6010,19980906,PRO"),
+        "ADD, , , ,18050303,AAAA BBBB,CL3,010-9000-6010,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL,-p, , ,birthday,19980906"),
-        "DEL,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO\nDEL,18050303,AAAA BBBB,CL3,010-9777-6057,19980906,PRO\nDEL,18050304,AAAA BBBB,CL3,010-9777-6058,19980906,PRO\nDEL,18050305,AAAA BBBB,CL3,010-9777-6059,19980906,PRO\nDEL,18050306,AAAA BBBB,CL3,010-9777-6010,19980906,PRO");
+        "DEL,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO\nDEL,18050303,AAAA BBBB,CL3,010-9000-6010,19980906,PRO\nDEL,18050304,AAAA BBBB,CL3,010-9777-6059,19980906,PRO\nDEL,18050305,AAAA BBBB,CL3,010-9777-6057,19980906,PRO\nDEL,18050306,AAAA BBBB,CL3,010-9777-6010,19980906,PRO");
 }
-
