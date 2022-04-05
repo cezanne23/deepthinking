@@ -14,16 +14,11 @@ public:
 		stringstream ss(str);
 		string word;
 
-		while (getline(ss, word, disc)) { // ',')) {
+		while (getline(ss, word, disc)) { 
 			while (' ' == word[0])  word.erase(0, 1);
 			result.push_back(word);
 		}
-#ifdef NOTDF
-		ColumnChecker checker;
-		if (checker.columnCheck(result) == false) {
-			result.clear();
-		}
-#endif
+
 		return result;
 	}
 private:
@@ -38,7 +33,6 @@ public:
 		searchPolicyList.insert({ CERTI, new SearhByCerti() });
 		searchPolicyList.insert({ CL, new SearhByCL() });
 		searchPolicyList.insert({ PHONENUM, new SearhByPhoneNumber() });
-
 	};
 	vector<string> searchID(const map<string, EmployeeInfo>& employeeInfo,
 		const vector<string>& parsedCmds);
@@ -76,5 +70,3 @@ private:
 	SearchEngineCore internalEngine;
 	EmployeeDB* employDB;
 };
-
-
