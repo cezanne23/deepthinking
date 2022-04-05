@@ -70,42 +70,115 @@ public:
 
 class MODUpdate { 
 public:
-    virtual void update( EmployeeInfo& enployeeInfo, string value)  = 0;
+    MODUpdate(EmployeeDB* employeeDB) : employeeDB_(employeeDB) {}
+    virtual void update( EmployeeInfo& employeeInfo, string value)  = 0;
+
+    void modifyOp(multimap<string, string>& map, pair<string, string> old, pair<string, string> update)
+    {
+        for (auto iter = map.lower_bound(old.first); iter != map.upper_bound(old.first); ++iter) {
+            if (old.second == iter->second) {
+                map.erase(iter);
+                map.insert(update);
+                return;
+            }
+        }
+    }
+
+    EmployeeDB* getDB() {
+        if (nullptr == employeeDB_) {
+            throw invalid_argument("employeeDB_ is empty");
+        }
+        return employeeDB_;
+    }
+private:
+    EmployeeDB* employeeDB_ = nullptr;
 };
 
 class MODUpdateName : public MODUpdate {
-    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setName(value);}
+public:
+    MODUpdateName(EmployeeDB* employeeDB) : MODUpdate(employeeDB) {}
+    virtual void update(EmployeeInfo& employeeInfo, string value) override {
+        string fullName = value;
+        vector<string> splittedName = StringSplitter::splitString(fullName, ' ');
+        string firstName = splittedName[0];
+        string lastName = splittedName[1];
+
+        modifyOp(getDB()->fullNameMap, pair<string, string>(employeeInfo.getName(), employeeInfo.getEmployeeNum()), pair<string, string>(fullName, employeeInfo.getEmployeeNum()));
+        modifyOp(getDB()->firstNameMap, pair<string, string>(employeeInfo.getFirstName(), employeeInfo.getEmployeeNum()), pair<string, string>(firstName, employeeInfo.getEmployeeNum()));
+        modifyOp(getDB()->lastNameMap, pair<string, string>(employeeInfo.getLastName(), employeeInfo.getEmployeeNum()), pair<string, string>(lastName, employeeInfo.getEmployeeNum()));
+
+        employeeInfo.setName(value);
+    }
 };
 
 class MODUpdateLevel : public MODUpdate {
-    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setLevel(value); }
+public:
+    MODUpdateLevel(EmployeeDB* employeeDB) : MODUpdate(employeeDB) {}
+    virtual void update(EmployeeInfo& employeeInfo, string value) override {
+        modifyOp(getDB()->levelMap, pair<string, string>(employeeInfo.getLevel(), employeeInfo.getEmployeeNum()), pair<string, string>(value, employeeInfo.getEmployeeNum()));
+        employeeInfo.setLevel(value); 
+    }
 };
 
 class MODUpdatePhoneNum : public MODUpdate {
-    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setPhoneNum(value); }
+public:
+    MODUpdatePhoneNum(EmployeeDB* employeeDB) : MODUpdate(employeeDB) {}
+    virtual void update(EmployeeInfo& employeeInfo, string value) override { 
+        string phoneNum = value;
+        vector<string> splittedPhoneNum = StringSplitter::splitString(phoneNum, '-');
+        string midPhoneNum = splittedPhoneNum[1];
+        string lastPhoneNum = splittedPhoneNum[2];
+
+        modifyOp(getDB()->phoneNumMap, pair<string, string>(employeeInfo.getPhoneNum(), employeeInfo.getEmployeeNum()), pair<string, string>(phoneNum, employeeInfo.getEmployeeNum()));
+        modifyOp(getDB()->phoneMidNumMap, pair<string, string>(employeeInfo.getPhoneMidNum(), employeeInfo.getEmployeeNum()), pair<string, string>(midPhoneNum, employeeInfo.getEmployeeNum()));
+        modifyOp(getDB()->phoneLastNumMap, pair<string, string>(employeeInfo.getPhoneLastNum(), employeeInfo.getEmployeeNum()), pair<string, string>(lastPhoneNum, employeeInfo.getEmployeeNum()));
+
+        employeeInfo.setPhoneNum(value); 
+    }
 };
 
 class MODUpdateBirth : public MODUpdate {
-    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setBirthDate(value); }
+public:
+    MODUpdateBirth(EmployeeDB* employeeDB) : MODUpdate(employeeDB) {}
+    virtual void update(EmployeeInfo& employeeInfo, string value) override {
+        string date = value;
+        string year = date.substr(0, 4);
+        string month = date.substr(4, 2);
+        string day = date.substr(6, 2);
+
+        modifyOp(getDB()->birthDateMap, pair<string, string>(employeeInfo.getBirthDate(), employeeInfo.getEmployeeNum()), pair<string, string>(date, employeeInfo.getEmployeeNum()));
+        modifyOp(getDB()->birthYearMap, pair<string, string>(employeeInfo.getBirthYear(), employeeInfo.getEmployeeNum()), pair<string, string>(year, employeeInfo.getEmployeeNum()));
+        modifyOp(getDB()->birthMonthMap, pair<string, string>(employeeInfo.getBirthMonth(), employeeInfo.getEmployeeNum()), pair<string, string>(month, employeeInfo.getEmployeeNum()));
+        modifyOp(getDB()->birthDayMap, pair<string, string>(employeeInfo.getBirthDay(), employeeInfo.getEmployeeNum()), pair<string, string>(day, employeeInfo.getEmployeeNum()));
+
+        employeeInfo.setBirthDate(value);
+    }
 };
 
 class MODUpdateCerti : public MODUpdate {
-    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setCerti(value); }
+public:
+    MODUpdateCerti(EmployeeDB* employeeDB) : MODUpdate(employeeDB) {}
+    virtual void update(EmployeeInfo& employeeInfo, string value) override {
+        modifyOp(getDB()->certiMap, pair<string, string>(employeeInfo.getCerti(), employeeInfo.getEmployeeNum()), pair<string, string>(value, employeeInfo.getEmployeeNum()));
+        employeeInfo.setCerti(value);
+    }
 };
 
 class MODUpdateEmployeeNum : public MODUpdate {
+public:
+    MODUpdateEmployeeNum(EmployeeDB* employeeDB) : MODUpdate(employeeDB) {}
     virtual void update(EmployeeInfo& enployeeInfo, string value) override { /* no nothing*/ }
 };
 
 class ModifyCommand : public ICommand {
 public:
     ModifyCommand() { 
-        updateList.insert({ NAME , new MODUpdateName });
-        updateList.insert({ CL , new MODUpdateLevel});
-        updateList.insert({ PHONENUM , new MODUpdatePhoneNum });
-        updateList.insert({ BIRTHDAY , new MODUpdateBirth });
-        updateList.insert({ CERTI , new MODUpdateCerti });
-        updateList.insert({ EMPLOYEENUM , new MODUpdateEmployeeNum });
+        updateList.insert({ NAME , new MODUpdateName(employeeDB)});
+        updateList.insert({ CL , new MODUpdateLevel(employeeDB) });
+        updateList.insert({ PHONENUM , new MODUpdatePhoneNum(employeeDB) });
+        updateList.insert({ BIRTHDAY , new MODUpdateBirth(employeeDB) });
+        updateList.insert({ CERTI , new MODUpdateCerti(employeeDB) });
+        updateList.insert({ EMPLOYEENUM , new MODUpdateEmployeeNum(employeeDB) });
     };
     virtual string runCmd(vector<string>& command) override;
 private:
