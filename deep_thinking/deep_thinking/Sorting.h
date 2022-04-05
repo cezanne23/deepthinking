@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -11,10 +12,11 @@ using namespace std;
 class ISorting {
 public:
     virtual void sort(vector<string> list) = 0;
+    virtual vector<string> sort_partial(vector<string> list, size_t k = 5) = 0;
     virtual vector<string> getTopk(size_t k = 5) = 0;
 };
 
-struct cmp {
+struct cmp_greater {
     bool operator()(string a, string b) {
         if (getULemployeeNum(a) > getULemployeeNum(b)) {
             return true;
@@ -33,7 +35,27 @@ struct cmp {
         }
         return employeeNum_UL;
     }
- 
+};
+
+struct cmp_less {
+    bool operator()(string a, string b) {
+        if (getULemployeeNum(a) < getULemployeeNum(b)) {
+            return true;
+        }
+        return false;
+    }
+
+    size_t getULemployeeNum(const string& employeeNum) const {
+        const size_t numThreshold = 69000000;
+        size_t employeeNum_UL = stoul(employeeNum.c_str());
+        if (employeeNum_UL < numThreshold) {
+            employeeNum_UL += numThreshold;
+        }
+        else {
+            employeeNum_UL -= numThreshold;
+        }
+        return employeeNum_UL;
+    }
 };
 
 class PriorityQueue : public ISorting {
@@ -64,6 +86,13 @@ public:
         return result;
     }
 
+    virtual vector<string> sort_partial(vector<string> list, size_t k = 5) override {
+        vector<string> results;
+        results.resize(list.size() < k ? list.size() : k);
+        partial_sort_copy(list.begin(), list.end(), results.begin(), results.end(), cmp_less());
+        return results;
+    }
+
 private:
-    priority_queue<string, vector<string>, cmp> pq_;
+    priority_queue<string, vector<string>, cmp_greater> pq_;
 };
