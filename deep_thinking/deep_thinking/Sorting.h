@@ -10,20 +10,42 @@ using namespace std;
 
 class ISorting {
 public:
-    virtual void sort(vector<EmployeeInfo> list) = 0;
-    virtual vector<EmployeeInfo> getTopk(size_t k = 5) = 0;
+    virtual void sort(vector<string> list) = 0;
+    virtual vector<string> getTopk(size_t k = 5) = 0;
+};
+
+struct cmp {
+    bool operator()(string a, string b) {
+        if (getULemployeeNum(a) > getULemployeeNum(b)) {
+            return true;
+        }
+        return false;
+    }
+
+    size_t getULemployeeNum(const string& employeeNum) const {
+        const size_t numThreshold = 69000000;
+        size_t employeeNum_UL = stoul(employeeNum.c_str());
+        if (employeeNum_UL < numThreshold) {
+            employeeNum_UL += numThreshold;
+        }
+        else {
+            employeeNum_UL -= numThreshold;
+        }
+        return employeeNum_UL;
+    }
+ 
 };
 
 class PriorityQueue : public ISorting {
 public:
-    virtual void sort(vector<EmployeeInfo> list) override {
+    virtual void sort(vector<string> list) override {
         for (auto& e : list) {
             pq_.push(e);
         }
     }
 
-    virtual vector<EmployeeInfo> getTopk(size_t k = 5) override {
-        vector<EmployeeInfo> result{};
+    virtual vector<string> getTopk(size_t k = 5) override {
+        vector<string> result{};
 
         if (k == 0) { // Return ALL
             while (!pq_.empty()) {
@@ -43,5 +65,5 @@ public:
     }
 
 private:
-    priority_queue<EmployeeInfo, vector<EmployeeInfo>, greater<EmployeeInfo>> pq_;
+    priority_queue<string, vector<string>, cmp> pq_;
 };

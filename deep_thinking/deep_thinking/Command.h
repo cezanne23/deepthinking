@@ -22,18 +22,14 @@ public:
         return result.substr(0, result.size() - 1);
     }
 
-    vector<string> displayEmployeeInfo(vector<string> list, string cmdType) {
-        vector<EmployeeInfo> infoList;
+    vector<string> displayEmployeeInfo(const vector<string>& list, const string cmdType) {
         vector<string> displayRecord;
         PriorityQueue priorityQueue;
 
-        for (const auto& employeeNum : list) {
-            infoList.push_back(employeeDB->employeeList[employeeNum]);
-        }
-        priorityQueue.sort(infoList);
+        priorityQueue.sort(list);
 
-        for (const auto& info : priorityQueue.getTopk()) {
-            displayRecord.push_back(cmdType + "," + employeeDB->employeeList[info.getEmployeeNum()].getString());
+        for (const auto& employeeNum : priorityQueue.getTopk()) {
+            displayRecord.push_back(cmdType + "," + employeeDB->employeeList[employeeNum].getString());
         }
         return displayRecord;
     }
