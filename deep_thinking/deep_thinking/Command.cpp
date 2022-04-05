@@ -18,6 +18,9 @@ string AddCommand::runCmd(vector<string>& command) {
 
 string DeleteCommand::runCmd(vector<string>& command) {
     vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
+
+    if (searchResult.size() == 0) return "DEL,NONE";
+
     vector<string> displayRecord;
     if (command[CMD_DISPLAY_RECORD] == "-p") {
         displayRecord = displayEmployeeInfo(searchResult, "DEL");
@@ -28,8 +31,7 @@ string DeleteCommand::runCmd(vector<string>& command) {
     }
 
     if (displayRecord.size() > 0) return convertToString(displayRecord);
-    if (searchResult.size()) return "DEL," + to_string(searchResult.size());
-    return "DEL,NONE";
+    return "DEL," + to_string(searchResult.size());
 };
 
 string ModifyCommand::runCmd(vector<string>& command) {
@@ -66,7 +68,7 @@ string ModifyCommand::runCmd(vector<string>& command) {
         }
     }
 
-  if (displayRecord.size() > 0)
+    if (displayRecord.size() > 0)
         return convertToString(displayRecord);
     if (searchResult.size() > 0)
         return string("MOD,") + to_string(searchResult.size());
