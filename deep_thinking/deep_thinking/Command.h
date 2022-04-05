@@ -45,9 +45,7 @@ public:
 
 protected:
     SearchEngine searchEngine;
-    EmployeeDB* employeeDB;  
-    PriorityQueue priorityQueue;
-
+    EmployeeDB* employeeDB;
 };
 
 class AddCommand : public ICommand {
@@ -68,13 +66,13 @@ public:
     virtual string runCmd(vector<string>& command) override;
 };
 
-class MODUpdate { 
+class MODUpdate {
 public:
-    virtual void update( EmployeeInfo& enployeeInfo, string value)  = 0;
+    virtual void update(EmployeeInfo& enployeeInfo, string value) = 0;
 };
 
 class MODUpdateName : public MODUpdate {
-    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setName(value);}
+    virtual void update(EmployeeInfo& enployeeInfo, string value) override { enployeeInfo.setName(value); }
 };
 
 class MODUpdateLevel : public MODUpdate {
@@ -99,9 +97,9 @@ class MODUpdateEmployeeNum : public MODUpdate {
 
 class ModifyCommand : public ICommand {
 public:
-    ModifyCommand() { 
+    ModifyCommand() {
         updateList.insert({ NAME , new MODUpdateName });
-        updateList.insert({ CL , new MODUpdateLevel});
+        updateList.insert({ CL , new MODUpdateLevel });
         updateList.insert({ PHONENUM , new MODUpdatePhoneNum });
         updateList.insert({ BIRTHDAY , new MODUpdateBirth });
         updateList.insert({ CERTI , new MODUpdateCerti });
