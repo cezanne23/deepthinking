@@ -52,14 +52,19 @@ TEST(FileControllerTest, fileWriteCheck) {
     const string testfilepath = "testWriteFile.txt";
     fileController.open("input_20_20.txt", testfilepath);
 
-    const string testString[4] = { "SCH, 02117175, SBILHUT LDEXRI, CL4, 010-2814-1699, 19950704, ADV",
-        "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 19861203, PRO",
-        "SCH, NONE",
-        "DEL, 1"
-    };
-    for (const auto& result : testString) {
-        fileController.writeCommandResult(result);
-    }
+    const string testString[5] = { "SCH,88114052,NQ LVARW,CL4,010-4528-3059,19911021,PRO",
+        "SCH,01122329,DN WD,CL4,010-7174-5680,20071117,PRO",
+        "MOD,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO",
+        "SCH,NONE",
+        "DEL,1"};
+
+    // multilines
+    fileController.writeCommandResult(testString[0] + "\n" + testString[1]);
+    // singleline
+    fileController.writeCommandResult(testString[2]);
+    fileController.writeCommandResult(testString[3]);
+    fileController.writeCommandResult(testString[4]);
+      
     fileController.close();
 
     //check the updated file

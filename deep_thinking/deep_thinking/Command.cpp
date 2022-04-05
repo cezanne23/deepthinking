@@ -17,15 +17,21 @@ string AddCommand::runCmd(vector<string>& command) {
 };
 
 string DeleteCommand::runCmd(vector<string>& command) {
-    vector<string> searchList = searchEngine.seachID(employeeDB->employeeList, command);
-    for (const auto& employeeNum : searchList) {
+    vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
+    vector<string> displayRecord;
+    
+    for (const auto& employeeNum : searchResult) {
+        if (command[CMD_DISPLAY_RECORD] == "-p" && displayRecord.size() < MAX_DISPLAY_RECORD_SIZE) {
+            displayRecord.push_back("DEL," + employeeDB->employeeList[employeeNum].getString());
+        }
         employeeDB->employeeList.erase(employeeNum);
     }
     //for (const auto& item : employeeDB->employeeList) {
     //    cout << item.first << " " << item.second << endl;
-    //}
-    if (searchList.size()) return to_string(searchList.size());
-    else return "NONE";
+    //} 
+    if (displayRecord.size() > 0) return convertToString(displayRecord);
+    if (searchResult.size()) return to_string(searchResult.size());
+    return "NONE";
 };
 
 string ModifyCommand::runCmd(vector<string>& command) {
