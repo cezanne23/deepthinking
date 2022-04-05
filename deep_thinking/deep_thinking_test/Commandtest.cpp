@@ -184,15 +184,30 @@ TEST(EmployeeInforManagerTC, EmployeeInforMODTest) {
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "MOD, , , ,name,FB NTAWR,birthday,20050520"),
         "MOD,1");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p, , ,name,FB NTAWR,birthday,20150520"),
+        "MOD,18050301,FB NTAWR,CL3,010-9777-6055,20050520,PRO");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "MOD, , , ,name,FB NTAWRAA,birthday,20150524"),
         "MOD,NONE");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p, , ,name,FB NTAWRAA,birthday,20120524"),
+        "MOD,NONE");
+
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "MOD, , , ,name,FB NTAWR,name,AAA BBBB"),
         "MOD,1");
 
+    // 
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p, , ,name,AAA BBBB,name,EEEE FFF"),
+        "MOD,18050301,AAA BBBB,CL3,010-9777-6055,20150520,PRO");
+    // 
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p, , ,name,EEEE FFF,name,AAA BBBB"),
+        "MOD,18050301,EEEE FFF,CL3,010-9777-6055,20150520,PRO");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "MOD, , , ,name,AAA BBBB,cl,CL4"),
         "MOD,1");
@@ -208,7 +223,6 @@ TEST(EmployeeInforManagerTC, EmployeeInforMODTest) {
     EXPECT_EQ(employeeInfoManager->ExcuteCommand( 
         "MOD, , , ,employeeNum,12345678,phoneNum,010-4567-1234"),
         "MOD,NONE");
-
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "ADD, , , ,18050310,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
         "");
@@ -238,3 +252,54 @@ TEST(EmployeeInforManagerTC, EmployeeInforMODTest) {
 
 }
 
+TEST(EmployeeInforManagerTC, EmployeeInforMODSchBirthTest) {
+    EmployeeInfoManager* employeeInfoManager = new EmployeeInfoManager();
+
+    EmployeeDB::getDB()->employeeList.clear();
+    map<string, EmployeeInfo> eDB = EmployeeDB::getDB()->employeeList;
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
+        "");
+
+    EXPECT_EQ(1, EmployeeDB::getDB()->employeeList.size());
+    
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p, , ,birthday,19980906,name,AAA BBBB"),
+        "MOD,18050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD, , , ,birthday,19980906,name,BB CCC"),
+        "MOD,1");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p,-d, ,birthday,06,name,CC DDD"),
+        "MOD,18050301,BB CCC,CL3,010-9777-6055,19980906,PRO");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p,-m, ,birthday,09,name,DD EEE"),
+        "MOD,18050301,CC DDD,CL3,010-9777-6055,19980906,PRO");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p,-y, ,birthday,1998,name,BIR TH09"),
+        "MOD,18050301,DD EEE,CL3,010-9777-6055,19980906,PRO");
+}
+
+TEST(EmployeeInforManagerTC, EmployeeInforMODPrintTest) {
+    EmployeeInfoManager* employeeInfoManager = new EmployeeInfoManager();
+
+    EmployeeDB::getDB()->employeeList.clear();
+    map<string, EmployeeInfo> eDB = EmployeeDB::getDB()->employeeList;
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
+        "");
+
+    EXPECT_EQ(1, EmployeeDB::getDB()->employeeList.size());
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p,-f, ,name,FB,cl,CL1"),
+        "MOD,18050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p,-l, ,name,NTAWR,phoneNum,010-9777-1111"),
+        "MOD,18050301,FB NTAWR,CL1,010-9777-6055,19980906,PRO");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "MOD,-p, , ,name,FB NTAWR,birthday,21980906"),
+        "MOD,18050301,FB NTAWR,CL1,010-9777-1111,19980906,PRO");
+
+}
