@@ -62,9 +62,6 @@
     <ClInclude Include="StringSplitter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Employee.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="EmployeeDB.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
