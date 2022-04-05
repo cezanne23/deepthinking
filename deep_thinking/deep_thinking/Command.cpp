@@ -32,24 +32,22 @@ string DeleteCommand::runCmd(vector<string>& command) {
     return "DEL,NONE";
 };
 
-
-
 string ModifyCommand::runCmd(vector<string>& command) {
 	vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
 	vector<string> displayRecord;
 
-    if (command[CMD_DISPLAY_RECORD] == "-p") {
-        displayRecord = displayEmployeeInfo(searchResult, "MOD");
-    }
-    string update_key = command[MOD_TARGET_KEY_IDX];
-    MODUpdate* update = updateList[update_key];
+	if (command[CMD_DISPLAY_RECORD] == "-p") {
+		displayRecord = displayEmployeeInfo(searchResult, "MOD");
+	}
+	string update_key = command[MOD_TARGET_KEY_IDX];
+	MODUpdate* update = updateList[update_key];
 	for (const auto& employeeNum : searchResult) {
-        update->update(employeeDB->employeeList[employeeNum], command[MOD_TARGET_VALUE_IDX]);
+		update->update(employeeDB->employeeList[employeeNum], command[MOD_TARGET_VALUE_IDX]);
 	}
 
 	if (displayRecord.size() > 0)
 		return convertToString(displayRecord);
-	if (searchResult.size() > 0 )
+	if (searchResult.size() > 0)
 		return string("MOD,") + to_string(searchResult.size());
 	return "MOD,NONE";
 };
