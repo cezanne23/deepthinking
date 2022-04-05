@@ -4,6 +4,7 @@
 #include "SearchEngine.h"
 #include "CommandParser.h"
 #include "EmployeeDB.h"
+#include "Sorting.h"
 
 using namespace std;
 
