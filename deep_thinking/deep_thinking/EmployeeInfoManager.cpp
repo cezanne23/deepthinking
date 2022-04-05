@@ -12,12 +12,12 @@ string EmployeeInfoManager::ExcuteCommand(string singleCmdString) {
 };
 
 void EmployeeInfoManager::Run(string inputfile, string outputfile) {
-    //TO DO : add to call filecontroller (read command/ write result)
-    //if (!fileController.open(inputfile, inputfile)) return;
+    if (!fileController.open(inputfile, outputfile)) return;
 
-    //string command;
-    //while ((command = fileController.getCommand()) != "") {       
-    //    fileController.writeCommandResult(ExcuteCommand(command));
-    //} 
-    //fileController.close();
+    string command;
+    while ((command = fileController.getCommand()) != "") {       
+        string result = ExcuteCommand(command);
+        if (result != "") fileController.writeCommandResult(result);
+    } 
+    fileController.close();
 }
