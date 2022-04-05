@@ -4,6 +4,7 @@
 #include "SearchEngine.h"
 #include "CommandParser.h"
 #include "EmployeeDB.h"
+#include "Sorting.h"
 
 using namespace std;
 
@@ -13,7 +14,6 @@ public:
     }
     virtual string runCmd(vector<string>& command) = 0;
     const int CMD_DISPLAY_RECORD = 1;
-    const int MAX_DISPLAY_RECORD_SIZE = 5;
     string convertToString(vector<string> strList) {
         string result;
         for (const auto& str : strList) {
@@ -21,9 +21,25 @@ public:
         }
         return result.substr(0, result.size() - 1);
     }
+
+    vector<string> displayEmployeeInfo(vector<string> list, string cmdType) {
+        vector<EmployeeInfo> infoList;
+        vector<string> displayRecord;
+        for (const auto& employeeNum : list) {
+            infoList.push_back(employeeDB->employeeList[employeeNum]);
+        }
+        priorityQueue.sort(infoList);
+
+        for (const auto& info : priorityQueue.getTopk()) {
+            displayRecord.push_back(cmdType + "," + employeeDB->employeeList[info.getEmployeeNum()].getString());
+        }
+        return displayRecord;
+    }
+
 protected:
     SearchEngine searchEngine;
     EmployeeDB* employeeDB;
+    PriorityQueue priorityQueue;
 };
 
 class AddCommand : public ICommand {
@@ -53,8 +69,7 @@ class SearchCommand : public ICommand {
 public:
     virtual string runCmd(vector<string>& command) override;
 
-private:
-	PriorityQueue priorityQueue;
+private:	
 	const int SCH_CMD_PRINT_INFO_IDX = 1;
 
 	string convertToString(vector<string> strList) {
