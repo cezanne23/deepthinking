@@ -58,6 +58,15 @@ TEST_F(SearchEngineSingletonDBTest, singletonDBSizeTest) {
 	EXPECT_EQ(res[0], "18115040");
 	res.clear();
 
+	res = searchEngine.searchID(parser.split("SCH,-p,-l, ,name,MPOSXU", ','));
+	ASSERT_EQ(res.size(), 1);
+	EXPECT_EQ(res[0], "08117441");
+	res.clear();
+	res = searchEngine.searchID(parser.split("SCH, ,-f, ,name,VXIHXOTH", ','));
+	ASSERT_EQ(res.size(), 1);
+	EXPECT_EQ(res[0], "15123099");
+	res.clear();
+
 	res = searchEngine.searchID(parser.split("SCH,-p,-d, ,birthday,04", ','));
 	ASSERT_EQ(res.size(), 1);
 	EXPECT_EQ(res[0], "02117175");
@@ -74,14 +83,6 @@ TEST_F(SearchEngineSingletonDBTest, singletonDBSizeTest) {
 
 	res = searchEngine.searchID(parser.split("SCH,-p, , ,certi,PRO", ','));
 	ASSERT_EQ(res.size(), 12);
-	/* todo where to search sort, searchEngine or output print */
-#ifdef NOTRUN
-	EXPECT_EQ(res[0], "88114052");
-	EXPECT_EQ(res[1], "01122329");
-	EXPECT_EQ(res[2], "02117175");
-	EXPECT_EQ(res[3], "05101762");
-	EXPECT_EQ(res[4], "08108827");
-#endif
 	res.clear();
 
 	res = searchEngine.searchID(parser.split("SCH, , , ,certi,ADV", ','));
