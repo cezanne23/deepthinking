@@ -37,35 +37,29 @@ public:
     const string getBirthMonth() const { return birthMonth_; }
     const string getBirthDay() const { return birthDay_; }
     const string getCerti() const { return certi_; }
-    
-    // Set
-    void setEmployeeNum(string value)  {   employeeNum_ = value; }
-    void setName(string value) {
-        vector<string> strs = StringSplitter().splitString(value, ' ');
-        firstName_ = strs[0];
-        lastName_ = strs[1];
-    }
-    void setFirstName(string value)   {   firstName_ = value; }
-    void setLastName(string value)   {   lastName_ = value; }
-    void setLevel(string value)   {   level_ = value; }
 
-    void setPhoneNum(string value)   {
-        vector<string> strs = StringSplitter().splitString(value, '-');
-        phoneMidNum_ = strs[1];
-        phoneLastNum_ = strs[2];
+    // Set
+    void setEmployeeNum(string value) { employeeNum_ = value; }
+    void setName(string value) {
+        initName(value);
     }
-    void setPhoneMidNum(string value)   {   phoneMidNum_ = value; }
-    void setPhoneLastNum(string value)   {   phoneLastNum_ = value; }
+    void setFirstName(string value) { firstName_ = value; }
+    void setLastName(string value) { lastName_ = value; }
+    void setLevel(string value) { level_ = value; }
+
+    void setPhoneNum(string value) {
+        initPhoneNum(value);
+    }
+    void setPhoneMidNum(string value) { phoneMidNum_ = value; }
+    void setPhoneLastNum(string value) { phoneLastNum_ = value; }
 
     void setBirthDate(string value) {
-        birthYear_ = value.substr(0, 4);
-        birthMonth_ = value.substr(4, 2); 
-        birthDay_ = value.substr(6, 2);;
+        initBirthday(value);
     }
-    void setBirthYear(string value)   {   birthYear_ = value; }
-    void setBirthMonth(string value)   {   birthMonth_ = value; }
-    void setBirthDay(string value)   {   birthDay_ = value; }
-    void setCerti(string value)   {  certi_ = value; }
+    void setBirthYear(string value) { birthYear_ = value; }
+    void setBirthMonth(string value) { birthMonth_ = value; }
+    void setBirthDay(string value) { birthDay_ = value; }
+    void setCerti(string value) { certi_ = value; }
 
     const string getString() const {
         return getEmployeeNum() + "," + getName() + "," + getLevel() + "," + getPhoneNum()
