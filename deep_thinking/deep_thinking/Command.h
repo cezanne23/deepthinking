@@ -25,6 +25,8 @@ public:
     vector<string> displayEmployeeInfo(vector<string> list, string cmdType) {
         vector<EmployeeInfo> infoList;
         vector<string> displayRecord;
+        PriorityQueue priorityQueue;
+
         for (const auto& employeeNum : list) {
             infoList.push_back(employeeDB->employeeList[employeeNum]);
         }
@@ -48,7 +50,6 @@ protected:
     const char CMD_DISC{ ',' };
     const int MOD_TARGET_KEY_IDX = 6;
     const int MOD_TARGET_VALUE_IDX = 7;
-    PriorityQueue priorityQueue;
 };
 
 class AddCommand : public ICommand {

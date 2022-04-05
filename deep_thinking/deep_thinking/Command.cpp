@@ -4,7 +4,7 @@
 using namespace std;
 
 string AddCommand::runCmd(vector<string>& command) {
-    // todo º°µµ class Á¤ÀÇ ÇÊ¿ä
+    // todo ÂºÂ°ÂµÂµ class ÃÂ¤Ã€Ã‡ Ã‡ÃŠÂ¿Ã¤
     EmployeeInfo employee{ command[ADD_CMD_EMPLOYEENUM_INFO_IDX],
         command[ADD_CMD_NAME_INFO_IDX],
         command[ADD_CMD_LEVEL_INFO_IDX],
@@ -66,7 +66,7 @@ string ModifyCommand::runCmd(vector<string>& command) {
         }
     }
 
-    if (displayRecord.size() > 0)
+  if (displayRecord.size() > 0)
         return convertToString(displayRecord);
     if (searchResult.size() > 0)
         return string("MOD,") + to_string(searchResult.size());
