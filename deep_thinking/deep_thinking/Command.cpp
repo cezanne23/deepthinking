@@ -47,7 +47,7 @@ string ModifyCommand::runCmd(vector<string>& command) {
             // employeeDB->employeeList[employeeNum].setEmployeeNum(command[MOD_TARGET_VALUE_IDX]);
 		}
 		else if (command[MOD_TARGET_KEY_IDX] == BIRTHDAY) {
-			employeeDB->employeeList[employeeNum].setEmployeeNum(command[MOD_TARGET_VALUE_IDX]);
+			employeeDB->employeeList[employeeNum].setBirthDate(command[MOD_TARGET_VALUE_IDX]);
 		}
 		else if (command[MOD_TARGET_KEY_IDX] == NAME) {
 			employeeDB->employeeList[employeeNum].setName(command[MOD_TARGET_VALUE_IDX]);
