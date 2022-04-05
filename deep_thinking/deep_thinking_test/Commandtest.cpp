@@ -13,149 +13,80 @@ protected:
     DeleteCommand deleteCommand;
     ModifyCommand modifyCommand;
     SearchCommand searchCommand;
+
+    CommandParser commandParser;
 };
 
 TEST_F(CommandRunTest, CommandTC) {
     vector<string> command;
-    
-    // 3명의 Employee 추가
-    command.clear();
-    command.push_back("ADD");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("18050301");
-    command.push_back("AAAA BBBB");
-    command.push_back("CL3");
-    command.push_back("010-9777-6055");
-    command.push_back("19980906");
-    command.push_back("PRO");
+
+    // Employee ADD
+    command = commandParser.parseCommand("ADD, , , ,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO");
+
     EXPECT_EQ(addCommand.runCmd(command), "");
 
-    command.clear();
-    command.push_back("ADD");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("96486152");
-    command.push_back("KYUMOK KIM");
-    command.push_back("CL3");
-    command.push_back("010-3355-7888");
-    command.push_back("19780806");
-    command.push_back("PRO");
+    command = commandParser.parseCommand("ADD, , , ,12486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
     EXPECT_EQ(addCommand.runCmd(command), "");
 
-    command.clear();
-    command.push_back("ADD");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("17105065");
-    command.push_back("DDDD EEEE");
-    command.push_back("CL2");
-    command.push_back("010-1234-5678");
-    command.push_back("19900804");
-    command.push_back("EX");
+    command = commandParser.parseCommand("ADD, , , ,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    EXPECT_EQ(addCommand.runCmd(command), "");
+
+    command = commandParser.parseCommand("ADD, , , ,93486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    EXPECT_EQ(addCommand.runCmd(command), "");
+
+    command = commandParser.parseCommand("ADD, , , ,69486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    EXPECT_EQ(addCommand.runCmd(command), "");
+
+    command = commandParser.parseCommand("ADD, , , ,20486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    EXPECT_EQ(addCommand.runCmd(command), "");
+
+    command = commandParser.parseCommand("ADD, , , ,06486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    EXPECT_EQ(addCommand.runCmd(command), "");
+
+    command = commandParser.parseCommand("ADD, , , ,17105065,DDDD EEEE,CL2,010-1234-5678,19900804,EX");
     EXPECT_EQ(addCommand.runCmd(command), "");
 
     // 탐색 Test
-    command.clear();
-    command.push_back("SCH");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("name");
-    command.push_back("KYUMOK KIM");
+    command = commandParser.parseCommand("SCH, , , ,name,AAAA BBBB");
     EXPECT_EQ(searchCommand.runCmd(command), "SCH,1");
 
-    command.clear();
-    command.push_back("SCH");
-    command.push_back("-p");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("name");
-    command.push_back("KYUMOK KIM");
-    EXPECT_EQ(searchCommand.runCmd(command), "SCH,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    command = commandParser.parseCommand("SCH, , , ,name,KYUMOK KIM");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,6");
 
-    command.clear();
-    command.push_back("SCH");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("cl");
-    command.push_back("CL3");
-    EXPECT_EQ(searchCommand.runCmd(command), "SCH,2");
+    command = commandParser.parseCommand("SCH,-p, , ,name,KYUMOK KIM");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,69486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,93486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,06486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,12486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
 
-    command.clear();
-    command.push_back("SCH");
-    command.push_back("-p");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("cl");
-    command.push_back("CL3");
-    string str = "SCH,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\nSCH,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO";
-    EXPECT_EQ(searchCommand.runCmd(command), 
-        str);
+    command = commandParser.parseCommand("SCH, , , ,cl,CL3");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,7");
+
+    command = commandParser.parseCommand("SCH,-p, , ,cl,CL3");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,69486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,93486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,06486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,12486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
 
     // CL3 삭제
-    command.clear();
-    command.push_back("DEL");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("cl");
-    command.push_back("CL3");
-    EXPECT_EQ(deleteCommand.runCmd(command), "DEL,2");
-
-    command.clear();
-    command.push_back("ADD");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("96486152");
-    command.push_back("KYUMOK KIM");
-    command.push_back("CL3");
-    command.push_back("010-3355-7888");
-    command.push_back("19780806");
-    command.push_back("PRO");
-    EXPECT_EQ(addCommand.runCmd(command), "");
-
-    command.clear();
-    command.push_back("ADD");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("17105065");
-    command.push_back("DDDD EEEE");
-    command.push_back("CL2");
-    command.push_back("010-1234-5678");
-    command.push_back("19900804");
-    command.push_back("EX");
-    EXPECT_EQ(addCommand.runCmd(command), "");
+    command = commandParser.parseCommand("DEL, , , ,cl,CL3");
+    EXPECT_EQ(deleteCommand.runCmd(command), "DEL,7");
 
     // 탐색 Test
-    command.clear();
-    command.push_back("SCH");
-    command.push_back("-p");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("name");
-    command.push_back("KYUMOK KIM");
-    // TODO : Delete 구현 이후 확인 필요 
-    //EXPECT_EQ(searchCommand.runCmd(command), "SCH,NONE");
+    command = commandParser.parseCommand("SCH,-p, , ,name,KYUMOK KIM");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,NONE");
+
+    // Employee 추가
+    command = commandParser.parseCommand("ADD, , , ,96486152,KYUMOK KIM,CL2,010-3355-7888,19780806,PRO");
+    EXPECT_EQ(addCommand.runCmd(command), "");
 
     // 수정 Test
-    command.clear();
-    command.push_back("MOD");
-    command.push_back("-p");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("name");
-    command.push_back("KYUMOK KIM");
-    command.push_back("name");
-    command.push_back("KYUMOK LEE");
+    command = commandParser.parseCommand("MOD,-p, , ,name,KYUMOK KIM,name,KYUMOK LEE");
     EXPECT_EQ(modifyCommand.runCmd(command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
 }
+
 TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
     EmployeeInfoManager* employeeInfoManager = new EmployeeInfoManager();
 
