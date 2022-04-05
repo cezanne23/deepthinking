@@ -11,11 +11,12 @@ protected:
     DeleteCommand deleteCommand;
     ModifyCommand modifyCommand;
     SearchCommand searchCommand;
-    map<string, EmployeeInfo> employeeInfo;
 };
 
 TEST_F(CommandRunTest, CommandTC) {
     vector<string> command;
+
+    // 3명의 Employee 추가
     command.clear();
     command.push_back("ADD");
     command.push_back(" ");
@@ -27,7 +28,6 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("010-9777-6055");
     command.push_back("19980906");
     command.push_back("PRO");
-    // 3명의 Employee 추가
     EXPECT_EQ(addCommand.runCmd(command), "");
 
     command.clear();
@@ -35,7 +35,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back(" ");
     command.push_back(" ");
     command.push_back(" ");
-    command.push_back("15486152");
+    command.push_back("96486152");
     command.push_back("KYUMOK KIM");
     command.push_back("CL3");
     command.push_back("010-3355-7888");
@@ -56,6 +56,45 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("EX");
     EXPECT_EQ(addCommand.runCmd(command), "");
 
+    // 탐색 Test
+    command.clear();
+    command.push_back("SCH");
+    command.push_back(" ");
+    command.push_back(" ");
+    command.push_back(" ");
+    command.push_back("name");
+    command.push_back("KYUMOK KIM");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,1");
+
+    command.clear();
+    command.push_back("SCH");
+    command.push_back("-p");
+    command.push_back(" ");
+    command.push_back(" ");
+    command.push_back("name");
+    command.push_back("KYUMOK KIM");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+
+    command.clear();
+    command.push_back("SCH");
+    command.push_back(" ");
+    command.push_back(" ");
+    command.push_back(" ");
+    command.push_back("cl");
+    command.push_back("CL3");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,2");
+
+    command.clear();
+    command.push_back("SCH");
+    command.push_back("-p");
+    command.push_back(" ");
+    command.push_back(" ");
+    command.push_back("cl");
+    command.push_back("CL3");
+    string str = "SCH,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\nSCH,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO";
+    EXPECT_EQ(searchCommand.runCmd(command), 
+        str);
+
     // CL3 삭제
     command.clear();
     command.push_back("DEL");
@@ -71,7 +110,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back(" ");
     command.push_back(" ");
     command.push_back(" ");
-    command.push_back("15486152");
+    command.push_back("96486152");
     command.push_back("KYUMOK KIM");
     command.push_back("CL3");
     command.push_back("010-3355-7888");
@@ -100,7 +139,8 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back(" ");
     command.push_back("name");
     command.push_back("KYUMOK KIM");
-    EXPECT_EQ(searchCommand.runCmd(command), "SearchCommand" /*TODO : "SCH,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
+    // TODO : Delete 구현 이후 확인 필요 
+    //EXPECT_EQ(searchCommand.runCmd(command), "SCH,NONE");
 
     // 수정 Test
     command.clear();
@@ -114,7 +154,6 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back("KYUMOK LEE");
     EXPECT_EQ(modifyCommand.runCmd(command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
 }
-
 TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
     EmployeeInfoManager* employeeInfoManager = new EmployeeInfoManager();
 
@@ -123,12 +162,17 @@ TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
         "");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "SCH, , , ,name,AAAA BBBB"),
+        "SCH,1");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "MOD, , , ,cl,CL3,name,AAAA CCCC"),
         "ModifyCommand");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "SCH, , , ,name,AAAA CCCC"),
-        "SearchCommand");
+        "SCH, , , ,name,AAAA BBBB"),
+        // Modify 구현 이후 수정 필요
+        "SCH,1");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL, , , ,name,AAAA CCCC"),

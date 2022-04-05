@@ -39,5 +39,39 @@ string ModifyCommand::runCmd(vector<string>& command) {
 };
 
 string SearchCommand::runCmd(vector<string>& command) {
-    return "SearchCommand";
+    string result = "";
+    vector<string> searchIdList;
+    vector<EmployeeInfo> employeeInfoList;
+    vector<EmployeeInfo> employeeInfoListTop5;
+    vector<string> strList;
+
+    searchIdList = searchEngine.searchID(command);
+
+    if (searchIdList.size() == 0) {
+        return result = "SCH,NONE";
+    }
+
+    if (command[SCH_CMD_PRINT_INFO_IDX] == "-p")
+    {
+        for (const string& employeeNum : searchIdList)
+        {
+            employeeInfoList.push_back(employeeDB->employeeList.find(employeeNum)->second);
+        }
+
+        priorityQueue.sort(employeeInfoList);
+
+        employeeInfoListTop5 = priorityQueue.getTopk();
+
+        for (const EmployeeInfo& employeeInfo : employeeInfoListTop5)
+        {
+            strList.push_back("SCH," + employeeInfo.getEmployeeNum() + "," + employeeInfo.getName() + "," + employeeInfo.getLevel()
+                + "," + employeeInfo.getPhoneNum() + "," + employeeInfo.getBirthDate() + "," + employeeInfo.getCerti());
+        }
+        result = convertToString(strList);
+    }
+    else if (command[SCH_CMD_PRINT_INFO_IDX] == " ") {
+        result = ("SCH," + to_string(searchIdList.size()));
+    }
+
+    return result;
 };
