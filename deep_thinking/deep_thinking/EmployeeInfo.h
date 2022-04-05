@@ -10,12 +10,13 @@ class EmployeeInfo {
 public:
     EmployeeInfo() {}
 
-    EmployeeInfo(string employeeNum, string name, string level, string phoneNum, string birthday, string certi)
+    EmployeeInfo(const string &employeeNum, const string &name, const string &level, const string &phoneNum, const  string &birthday, const  string &certi)
         : employeeNum_(employeeNum), level_(level), certi_(certi) {
         initName(name);
         initBirthday(birthday);
         initPhoneNum(phoneNum);
     }
+    EmployeeInfo(const EmployeeInfo& eInfo) = default;
 
     const string getEmployeeNum() const { return employeeNum_; }
     const string getName() const { return firstName_ + " " + lastName_; }

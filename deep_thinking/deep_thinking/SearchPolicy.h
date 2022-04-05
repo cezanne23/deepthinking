@@ -24,11 +24,9 @@ public:
     vector<string> search_base(const map<string, EmployeeInfo>& employeeDict, function<bool(EmployeeInfo)> isMatched) {
         vector<string> result;
 
-        for (auto it = employeeDict.begin(); it != employeeDict.end(); ++it) {
-            EmployeeInfo eInfo = it->second;
-            bool res = isMatched(eInfo);
-            if (res) {
-                result.push_back(it->first);
+        for (const auto& [key, eInfo] : employeeDict) {
+            if (isMatched(eInfo)) {
+                result.emplace_back(key);
             }
         }
 
