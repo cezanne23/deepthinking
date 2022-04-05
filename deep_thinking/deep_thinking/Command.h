@@ -26,11 +26,10 @@ public:
         vector<string> displayRecord;
         PriorityQueue priorityQueue;
 
-        priorityQueue.sort(list);
-
-        for (const auto& employeeNum : priorityQueue.getTopk()) {
+        for (const auto& employeeNum : priorityQueue.sort_partial(list, 5)) {
             displayRecord.push_back(cmdType + "," + employeeDB->employeeList[employeeNum].getString());
         }
+
         return displayRecord;
     }
     const string EMPLOYEENUM{ "employeeNum" };
