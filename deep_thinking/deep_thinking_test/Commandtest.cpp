@@ -210,13 +210,25 @@ TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
         "ADD, , , ,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050302,AAAA CCCC,CL3,010-9777-6055,19981006,PRO"),
+        "ADD, , , ,18050302,AAAA CCCC,CL3,010-9777-6056,19981206,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050303,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
+        "ADD, , , ,18050303,AAAA BBBB,CL3,010-9777-6057,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "DEL, , , ,birthday,19980906"),
-        "2");
+        "ADD, , , ,18050304,AAAA BBBB,CL3,010-9777-6058,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050305,AAAA BBBB,CL3,010-9777-6059,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050306,AAAA BBBB,CL3,010-9777-6010,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "ADD, , , ,18050307,AAAA BBBB,CL3,010-9000-6010,19980906,PRO"),
+        "");
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "DEL,-p, , ,birthday,19980906"),
+        "DEL,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO\nDEL,18050303,AAAA BBBB,CL3,010-9777-6057,19980906,PRO\nDEL,18050304,AAAA BBBB,CL3,010-9777-6058,19980906,PRO\nDEL,18050305,AAAA BBBB,CL3,010-9777-6059,19980906,PRO\nDEL,18050306,AAAA BBBB,CL3,010-9777-6010,19980906,PRO");
 }
 

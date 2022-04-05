@@ -11,7 +11,7 @@ TEST(EmployeeInfoTest, getInfoTest) {
     EXPECT_EQ(test.getPhoneNum(), info[3]);
     EXPECT_EQ(test.getBirthDate(), info[4]);
     EXPECT_EQ(test.getCerti(), info[5]);
-
+    EXPECT_EQ(test.getString(), "22040189,DEEP Park,CL1,010-2134-5678,20001010,EX");
     cout << test << endl;
 }
 
