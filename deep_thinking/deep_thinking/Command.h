@@ -68,15 +68,4 @@ public:
 class SearchCommand : public ICommand {
 public:
     virtual string runCmd(vector<string>& command) override;
-
-private:	
-	const int SCH_CMD_PRINT_INFO_IDX = 1;
-
-	string convertToString(vector<string> strList) {
-		string result;
-		for (const auto& str : strList) {
-			result += str + "\n";
-		}
-		return result.substr(0, result.size() - 1);
-	}
 };
