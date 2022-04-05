@@ -48,7 +48,7 @@ protected:
     const string CL{ "cl" };
     const string PHONENUM{ "phoneNum" };
     const char CMD_DISC{ ',' };
-    const int MOD_TARGET_KEY_IDX = 6; 
+    const int MOD_TARGET_KEY_IDX = 6;
     const int MOD_TARGET_VALUE_IDX = 7;
 };
 

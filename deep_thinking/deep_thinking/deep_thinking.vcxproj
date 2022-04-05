@@ -148,7 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h" />
-    <ClInclude Include="Employee.h" />
     <ClInclude Include="EmployeeInfo.h" />
     <ClInclude Include="EmployeeInfoManager.h" />
     <ClInclude Include="ArgumentChecker.h" />
