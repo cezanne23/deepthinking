@@ -91,14 +91,7 @@ TEST_F(SearchEngineSingletonDBTest, singletonDBSizeTest) {
 
 	res = searchEngine.searchID(parser.split("SCH,-p, , ,cl,CL4", ','));
 	ASSERT_EQ(res.size(), 9);
-	/* todo where to search sort, searchEngine or output print */
-#ifdef NOTRUN
-	EXPECT_EQ(res[0], "88114052");
-	EXPECT_EQ(res[1], "01122329");
-	EXPECT_EQ(res[2], "02117175");
-	EXPECT_EQ(res[3], "05101762");
-	EXPECT_EQ(res[4], "08108827");
-#endif
+
 	res.clear();
 
 	res = searchEngine.searchID(parser.split("SCH, ,-m, ,birthday,09", ','));
@@ -131,26 +124,71 @@ TEST_F(SearchEngineSingletonDBTest, singletonDBSizeTest) {
 	res.clear();
 }
 
-TEST(SingletonDBTest, singletonDBSizeTest) {
-#ifdef NOTRUN
-	EmployeeDB* employDB = &EmployeeDB::getDB();
-	EXPECT_EQ(0, employDB->employeeList.size());
 
+// dude
+TEST(SearchEngineMaxDBTest, MaxDBTest) {
+	EmployeeDB::getDB()->employeeList.clear();
+	const size_t MAX_SIZE = 100000;
 	string data = "ADD, , , ,05101762,VCUHLE HMU,CL4,010-3988-9289,20030819,PRO";
 	InputParcer parser;
 	vector<string> data1 = parser.split(data, ',');
 
-	int num = 99 + 10000000;
-	string id = to_string(num);
-	EmployeeInfo employee{ id, data1[5], data1[6], data1[7], data1[8], data1[9] };
-	employDB->employeeList.insert({ id,  employee });
+	for (auto i = 0; i < MAX_SIZE; i++) {
+		int num = i + 10000000;
+		string id = to_string(num);
+		EmployeeInfo employee{ id, data1[5], data1[6], data1[7], data1[8], data1[9] };
+		EmployeeDB::getDB()->employeeList.insert({ id,  employee });
+	}
+}
 
-	EXPECT_EQ(1, employDB->employeeList.size());
+TEST(SearchEngineMaxDBTest, MaxDBSerchNameTest) {
+	SearchEngine searchEngine;
+	InputParcer parser;
+	
+	string incmd;
+	vector<string> ret, exp;
 
-	EmployeeDB employDBA = EmployeeDB::getDB();
-	EXPECT_EQ(1, employDBA.employeeList.size());
-#endif
-};
+	incmd = "SCH, , , ,name,VCUHLE HMU";
+	ret = searchEngine.searchID( parser.split(incmd, ','));
+	EXPECT_EQ(100000, ret.size());
+}
+
+TEST(SearchEngineMaxDBTest, MaxDBSerchCLTest) {
+	SearchEngine searchEngine;
+	InputParcer parser;
+
+	string incmd;
+	vector<string> ret, exp;
+	
+	incmd = "SCH, , , ,cl,CL4";
+	ret = searchEngine.searchID(parser.split(incmd, ','));
+	EXPECT_EQ(100000, ret.size());
+}
+
+
+TEST(SearchEngineMaxDBTest, MaxDBSerchCertiTest) {
+	SearchEngine searchEngine;
+	InputParcer parser;
+
+	string incmd;
+	vector<string> ret, exp;
+
+	incmd = "SCH, , , ,certi,PRO";
+	ret = searchEngine.searchID(parser.split(incmd, ','));
+	EXPECT_EQ(100000, ret.size());
+}
+
+TEST(SearchEngineMaxDBTest, MaxDBSerchBirthMonthTest) {
+	SearchEngine searchEngine;
+	InputParcer parser;
+
+	string incmd;
+	vector<string> ret, exp;
+
+	incmd = "SCH, ,-m, ,birthday,08";
+	ret = searchEngine.searchID(parser.split(incmd, ','));
+	EXPECT_EQ(100000, ret.size());
+}
 
 class SearchEngineTest : public ::testing::Test {
 protected:
@@ -181,7 +219,6 @@ ADD, , , ,05101762,VCUHLE HMU,CL4,010-3988-9289,20030819,PRO";
 		for (auto st1 : addlist) {
 			vector<string> data1 = parser.split(st1, ',');
 			EmployeeInfo employee{ string(data1[4]), data1[5], data1[6], data1[7], data1[8], data1[9] };
-			// todo map info employeeInfoDict.insert({ atoi(data1[4].c_str()),  employee });
 			employeeInfoDict.insert({ data1[4],  employee });
 		}
 	}
@@ -218,14 +255,7 @@ TEST_F(SearchEngineTest, scenariTest) {
 	res = searchEngine.seachID(employeeInfoDict, parser.split("SCH,-p, , ,certi,PRO", ','));
 	ASSERT_EQ(res.size(), 12);
 	/* todo where to search sort, searchEngine or output print */
-#ifdef NOTRUN
 
-	EXPECT_EQ(res[0], "88114052");
-	EXPECT_EQ(res[1], "01122329");
-	EXPECT_EQ(res[2], "02117175");
-	EXPECT_EQ(res[3], "05101762");
-	EXPECT_EQ(res[4], "08108827");
-#endif
 	res.clear();
 
 	res = searchEngine.seachID(employeeInfoDict, parser.split("SCH, , , ,certi,ADV", ','));
@@ -235,13 +265,6 @@ TEST_F(SearchEngineTest, scenariTest) {
 	res = searchEngine.seachID(employeeInfoDict, parser.split("SCH,-p, , ,cl,CL4", ','));
 	ASSERT_EQ(res.size(), 9);
 	/* todo where to search sort, searchEngine or output print */
-#ifdef NOTRUN
-	EXPECT_EQ(res[0], "88114052");
-	EXPECT_EQ(res[1], "01122329");
-	EXPECT_EQ(res[2], "02117175");
-	EXPECT_EQ(res[3], "05101762");
-	EXPECT_EQ(res[4], "08108827");
-#endif
 	res.clear();
 
 	res = searchEngine.seachID(employeeInfoDict, parser.split("SCH, ,-m, ,birthday,09", ','));
@@ -252,86 +275,6 @@ TEST_F(SearchEngineTest, scenariTest) {
 	ASSERT_EQ(res.size(), 1);
 	EXPECT_EQ(res[0], "17112609");
 	res.clear();
-}
-
-class SearchEnginePerformanceTest : public ::testing::Test {
-protected:
-	void SetUp() override {
-		const size_t MAX_SIZE = 100000;
-		string data = "ADD, , , ,05101762,VCUHLE HMU,CL4,010-3988-9289,20030819,PRO";
-		vector<string> data1 = parser.split(data, ',');
-
-		for (auto i = 0; i < MAX_SIZE; i++) {
-			int num = i + 10000000;
-			string id = to_string(num);
-			EmployeeInfo employee{ id, data1[5], data1[6], data1[7], data1[8], data1[9] };
-			employeeInfoDict.insert({ id,  employee });
-		}
-	}
-
-	void TearDown() override {};
-
-	InputParcer parser;
-	map<string, EmployeeInfo> employeeInfoDict;
-};
-
-TEST_F(SearchEnginePerformanceTest, maxDBsearchTest) {
-
-	SearchEngine searchEngine;
-	string incmd("SCH, , , ,employeeNum,10000001");
-	InputParcer parser;
-	vector<string> exp = { "10000001" };
-	vector<string> ret = searchEngine.seachID(employeeInfoDict, parser.split(incmd, ','));
-	EXPECT_EQ(exp, ret);
-	incmd.clear();
-	exp.clear();
-	ret.clear();
-
-
-	incmd = "SCH, , , ,employeeNum,10099999";
-	exp.push_back("10099999");
-	ret = searchEngine.seachID(employeeInfoDict, parser.split(incmd, ','));
-
-	EXPECT_EQ(exp, ret);
-	incmd.clear();
-	exp.clear();
-	ret.clear();
-
-	incmd = "SCH, , , ,name,VCUHLE HMU";
-	ret = searchEngine.seachID(employeeInfoDict, parser.split(incmd, ','));
-	EXPECT_EQ(100000, ret.size());
-	incmd.clear();
-	exp.clear();
-	ret.clear();
-
-	incmd = "SCH, , , ,cl,CL4";
-	ret = searchEngine.seachID(employeeInfoDict, parser.split(incmd, ','));
-	EXPECT_EQ(100000, ret.size());
-	incmd.clear();
-	exp.clear();
-	ret.clear();
-
-	incmd = "SCH, , , ,certi,PRO";
-	ret = searchEngine.seachID(employeeInfoDict, parser.split(incmd, ','));
-	EXPECT_EQ(100000, ret.size());
-	incmd.clear();
-	exp.clear();
-	ret.clear();
-
-	incmd = "SCH, , , ,certi,ADV";
-	ret = searchEngine.seachID(employeeInfoDict, parser.split(incmd, ','));
-	EXPECT_EQ(0, ret.size());
-	incmd.clear();
-	exp.clear();
-	ret.clear();
-}
-
-TEST(SearchEngineInterfaceTest, classNameTest) {
-	SearchEngine searchEngine;
-	map<string, EmployeeInfo> testdb;
-
-	//	vector<EmployeeInfo> ret = searchEngine.search(testdb, 1);
-		//EXPECT_EQ(0, ret.size());
 }
 
 TEST(SearchEngineParserTest, ParseTest) {
