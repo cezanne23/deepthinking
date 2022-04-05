@@ -18,6 +18,8 @@ public:
 	const string SEARCH_BIRTH_YEAR_STR{ "-y" };
 	const string SEARCH_PHONENUMBER_MID_STR{ "-m" };
 	const string SEARCH_PHONENUMBER_LAST_STR{ "-l" };
+	const string SEARCH_NAME_FIRST{ "-f" };
+	const string SEARCH_NAME_LAST{ "-l" };
 
 
 	vector<string> search_base(const map<string, EmployeeInfo>& employeeDict , function<bool (EmployeeInfo)> isMatched) {
@@ -50,9 +52,19 @@ class SearhByName : public Search {
 private:
 	virtual vector<string> search(const map<string, EmployeeInfo>& employeeInfo, const vector<string>& parsedCmds)  override {
 		string key = parsedCmds[SEARCH_KEY_IDX];
-		auto isMatched = [&key](const EmployeeInfo& employA)  -> bool {
-			return employA.getName() == key; };
-		return search_base(employeeInfo, isMatched);
+		if (parsedCmds[SEARCH_OPTION_KEY_IDX] == SEARCH_NAME_FIRST) {
+			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
+				return employA.getFirstName() == key; });
+		}
+		else if (parsedCmds[SEARCH_OPTION_KEY_IDX] == SEARCH_NAME_LAST) {
+			return search_base(employeeInfo, [&key](const EmployeeInfo& employA)  -> bool {
+				return employA.getLastName() == key; });
+		}
+		else {
+			auto isMatched = [&key](const EmployeeInfo& employA)  -> bool {
+				return employA.getName() == key; };
+			return search_base(employeeInfo, isMatched);
+		}
 	};
 };
 

@@ -68,7 +68,7 @@ string ModifyCommand::runCmd(vector<string>& command) {
 
 	if (displayRecord.size() > 0)
 		return convertToString(displayRecord);
-	if (searchResult.size())
+	if (searchResult.size() > 0 )
 		return string("MOD,") + to_string(searchResult.size());
 	return "MOD,NONE";
 };
