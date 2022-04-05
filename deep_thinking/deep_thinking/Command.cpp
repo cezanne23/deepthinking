@@ -28,7 +28,7 @@ string DeleteCommand::runCmd(vector<string>& command) {
     }
 
     if (displayRecord.size() > 0) return convertToString(displayRecord);
-    if (searchResult.size()) return to_string(searchResult.size());
+    if (searchResult.size()) return "DEL,"+ to_string(searchResult.size());
     return "DEL,NONE";
 };
 

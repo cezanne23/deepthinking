@@ -105,7 +105,7 @@ TEST_F(CommandRunTest, CommandTC) {
     command.push_back(" ");
     command.push_back("cl");
     command.push_back("CL3");
-    EXPECT_EQ(deleteCommand.runCmd(command), "2");
+    EXPECT_EQ(deleteCommand.runCmd(command), "DEL,2");
 
     command.clear();
     command.push_back("ADD");
@@ -200,11 +200,11 @@ TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL, , , ,name,AAAA CCCC"),
-        "1");
+        "DEL,1");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL, , , ,phoneNum,010-9777-6055"),
-        "3");
+        "DEL,3");
 
     EXPECT_EQ(EmployeeDB::getDB()->employeeList.size(), 0);
 
