@@ -142,6 +142,10 @@ TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
     EXPECT_EQ(EmployeeDB::getDB()->employeeList.size(), 0);
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
+        "DEL, , , ,phoneNum,010-9777-6055"),
+        "DEL,NONE");
+
+    EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "ADD, , , ,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
