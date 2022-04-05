@@ -222,18 +222,21 @@ TEST(EmployeeInforManagerTC, EmployeeInforMODTest) {
         "ADD, , , ,99050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
+        "ADD, , , ,18050305,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "ADD, , , ,84050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO"),
         "");
-#if 0 // todo sort
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "MOD,-p, , ,certi,PRO,cl,CL4"),
-        ""
- 
+        string("MOD,69050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
+        string("MOD,84050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
+        string("MOD,99050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
+        string("MOD,18050305,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
+        string("MOD,18050310,FB NTAWR,CL3,010-9777-6055,19980906,PRO")
     );
 
+#if 0
     string("MOD,69050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
         string("MOD,84050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
         string("MOD,99050301,FB NTAWR,CL3,010-9777-6055,19980906,PRO\n") +
