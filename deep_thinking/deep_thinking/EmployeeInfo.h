@@ -37,29 +37,29 @@ public:
     const string getBirthMonth() const { return birthMonth_; }
     const string getBirthDay() const { return birthDay_; }
     const string getCerti() const { return certi_; }
-    
+
     // Set
-    void setEmployeeNum(string value)  {   employeeNum_ = value; }
+    void setEmployeeNum(string value) { employeeNum_ = value; }
     void setName(string value) {
         initName(value);
     }
-    void setFirstName(string value)   {   firstName_ = value; }
-    void setLastName(string value)   {   lastName_ = value; }
-    void setLevel(string value)   {   level_ = value; }
+    void setFirstName(string value) { firstName_ = value; }
+    void setLastName(string value) { lastName_ = value; }
+    void setLevel(string value) { level_ = value; }
 
-    void setPhoneNum(string value)   {
+    void setPhoneNum(string value) {
         initPhoneNum(value);
     }
-    void setPhoneMidNum(string value)   {   phoneMidNum_ = value; }
-    void setPhoneLastNum(string value)   {   phoneLastNum_ = value; }
+    void setPhoneMidNum(string value) { phoneMidNum_ = value; }
+    void setPhoneLastNum(string value) { phoneLastNum_ = value; }
 
     void setBirthDate(string value) {
         initBirthday(value);
     }
-    void setBirthYear(string value)   {   birthYear_ = value; }
-    void setBirthMonth(string value)   {   birthMonth_ = value; }
-    void setBirthDay(string value)   {   birthDay_ = value; }
-    void setCerti(string value)   {  certi_ = value; }
+    void setBirthYear(string value) { birthYear_ = value; }
+    void setBirthMonth(string value) { birthMonth_ = value; }
+    void setBirthDay(string value) { birthDay_ = value; }
+    void setCerti(string value) { certi_ = value; }
 
     const string getString() const {
         return getEmployeeNum() + "," + getName() + "," + getLevel() + "," + getPhoneNum()
@@ -104,6 +104,8 @@ public:
         }
         return false;
     }
+
+private:
     void initName(string name) {
         istringstream iss(name);
         iss >> firstName_ >> lastName_;
@@ -130,7 +132,7 @@ public:
         phoneMidNum_ = phoneNumList[1];
         phoneLastNum_ = phoneNumList[2];
     }
-private:
+
     size_t getULemployeeNum(const string& employeeNum) const {
         const size_t numThreshold = 69000000;
         size_t employeeNum_UL = stoul(employeeNum.c_str());
