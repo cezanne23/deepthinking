@@ -4,156 +4,91 @@
 
 class CommandRunTest : public ::testing::Test {
 protected:
-    void SetUp() override {}
+    void SetUp() override {
+        EmployeeDB::getDB()->employeeList.clear();
+    }
 
     void TearDown() override {}
     AddCommand addCommand;
     DeleteCommand deleteCommand;
     ModifyCommand modifyCommand;
     SearchCommand searchCommand;
+
+    CommandParser commandParser;
 };
 
 TEST_F(CommandRunTest, CommandTC) {
     vector<string> command;
 
-    // 3¸íÀÇ Employee Ãß°¡
-    command.clear();
-    command.push_back("ADD");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("18050301");
-    command.push_back("AAAA BBBB");
-    command.push_back("CL3");
-    command.push_back("010-9777-6055");
-    command.push_back("19980906");
-    command.push_back("PRO");
+    // Employee ADD
+    command = commandParser.parseCommand("ADD, , , ,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO");
+
     EXPECT_EQ(addCommand.runCmd(command), "");
 
-    command.clear();
-    command.push_back("ADD");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("96486152");
-    command.push_back("KYUMOK KIM");
-    command.push_back("CL3");
-    command.push_back("010-3355-7888");
-    command.push_back("19780806");
-    command.push_back("PRO");
+    command = commandParser.parseCommand("ADD, , , ,12486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
     EXPECT_EQ(addCommand.runCmd(command), "");
 
-    command.clear();
-    command.push_back("ADD");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("17105065");
-    command.push_back("DDDD EEEE");
-    command.push_back("CL2");
-    command.push_back("010-1234-5678");
-    command.push_back("19900804");
-    command.push_back("EX");
+    command = commandParser.parseCommand("ADD, , , ,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
     EXPECT_EQ(addCommand.runCmd(command), "");
 
-    // Å½»ö Test
-    command.clear();
-    command.push_back("SCH");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("name");
-    command.push_back("KYUMOK KIM");
+    command = commandParser.parseCommand("ADD, , , ,93486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    EXPECT_EQ(addCommand.runCmd(command), "");
+
+    command = commandParser.parseCommand("ADD, , , ,69486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    EXPECT_EQ(addCommand.runCmd(command), "");
+
+    command = commandParser.parseCommand("ADD, , , ,20486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    EXPECT_EQ(addCommand.runCmd(command), "");
+
+    command = commandParser.parseCommand("ADD, , , ,06486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    EXPECT_EQ(addCommand.runCmd(command), "");
+
+    command = commandParser.parseCommand("ADD, , , ,17105065,DDDD EEEE,CL2,010-1234-5678,19900804,EX");
+    EXPECT_EQ(addCommand.runCmd(command), "");
+
+    // íƒìƒ‰ Test
+    command = commandParser.parseCommand("SCH, , , ,name,AAAA BBBB");
     EXPECT_EQ(searchCommand.runCmd(command), "SCH,1");
 
-    command.clear();
-    command.push_back("SCH");
-    command.push_back("-p");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("name");
-    command.push_back("KYUMOK KIM");
-    EXPECT_EQ(searchCommand.runCmd(command), "SCH,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
+    command = commandParser.parseCommand("SCH, , , ,name,KYUMOK KIM");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,6");
 
-    command.clear();
-    command.push_back("SCH");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("cl");
-    command.push_back("CL3");
-    EXPECT_EQ(searchCommand.runCmd(command), "SCH,2");
+    command = commandParser.parseCommand("SCH,-p, , ,name,KYUMOK KIM");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,69486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,93486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,06486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,12486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
 
-    command.clear();
-    command.push_back("SCH");
-    command.push_back("-p");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("cl");
-    command.push_back("CL3");
-    string str = "SCH,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\nSCH,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO";
-    EXPECT_EQ(searchCommand.runCmd(command), 
-        str);
+    command = commandParser.parseCommand("SCH, , , ,cl,CL3");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,7");
 
-    // CL3 »èÁ¦
-    command.clear();
-    command.push_back("DEL");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("cl");
-    command.push_back("CL3");
-    EXPECT_EQ(deleteCommand.runCmd(command), "2");
+    command = commandParser.parseCommand("SCH,-p, , ,cl,CL3");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,69486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,93486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,96486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,06486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO\n\
+SCH,12486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO");
 
-    command.clear();
-    command.push_back("ADD");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("96486152");
-    command.push_back("KYUMOK KIM");
-    command.push_back("CL3");
-    command.push_back("010-3355-7888");
-    command.push_back("19780806");
-    command.push_back("PRO");
+    // CL3 ì‚­ì œ
+    command = commandParser.parseCommand("DEL, , , ,cl,CL3");
+    EXPECT_EQ(deleteCommand.runCmd(command), "DEL,7");
+
+    // íƒìƒ‰ Test
+    command = commandParser.parseCommand("SCH,-p, , ,name,KYUMOK KIM");
+    EXPECT_EQ(searchCommand.runCmd(command), "SCH,NONE");
+
+    // Employee ì¶”ê°€
+    command = commandParser.parseCommand("ADD, , , ,96486152,KYUMOK KIM,CL2,010-3355-7888,19780806,PRO");
     EXPECT_EQ(addCommand.runCmd(command), "");
 
-    command.clear();
-    command.push_back("ADD");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("17105065");
-    command.push_back("DDDD EEEE");
-    command.push_back("CL2");
-    command.push_back("010-1234-5678");
-    command.push_back("19900804");
-    command.push_back("EX");
-    EXPECT_EQ(addCommand.runCmd(command), "");
+    // ìˆ˜ì • Test
 
-    // Å½»ö Test
-    command.clear();
-    command.push_back("SCH");
-    command.push_back("-p");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("name");
-    command.push_back("KYUMOK KIM");
-    // TODO : Delete ±¸Çö ÀÌÈÄ È®ÀÎ ÇÊ¿ä 
-    //EXPECT_EQ(searchCommand.runCmd(command), "SCH,NONE");
+    command = commandParser.parseCommand("MOD,-p, , ,name,KYUMOK KIM,name,KYUMOK LEE");
+    EXPECT_EQ(modifyCommand.runCmd(command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
 
-    // ¼öÁ¤ Test
-    command.clear();
-    command.push_back("MOD");
-    command.push_back("-p");
-    command.push_back(" ");
-    command.push_back(" ");
-    command.push_back("name");
-    command.push_back("KYUMOK KIM");
-    command.push_back("name");
-    command.push_back("KYUMOK LEE");
-    // move seperat TC EXPECT_EQ(modifyCommand.runCmd(command), "ModifyCommand" /*TODO : "MOD,15486152,KYUMOK KIM,CL3,010-3355-7888,19780806,PRO""*/);
 }
+
 TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
     EmployeeInfoManager* employeeInfoManager = new EmployeeInfoManager();
 
@@ -171,12 +106,12 @@ TEST(EmployeeInforManagerTC, EmployeeInforManagerTest) {
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "SCH, , , ,name,AAAA BBBB"),
-        // Modify ±¸Çö ÀÌÈÄ ¼öÁ¤ ÇÊ¿ä
+        // Modify êµ¬í˜„ ì´í›„ ìˆ˜ì • í•„ìš”
         "SCH,1");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL, , , ,name,AAAA CCCC"),
-        "NONE");
+        "DEL,NONE");
 }
 
 TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
@@ -198,11 +133,11 @@ TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL, , , ,name,AAAA CCCC"),
-        "1");
+        "DEL,1");
 
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL, , , ,phoneNum,010-9777-6055"),
-        "3");
+        "DEL,3");
 
     EXPECT_EQ(EmployeeDB::getDB()->employeeList.size(), 0);
 
@@ -210,22 +145,22 @@ TEST(EmployeeInforManagerTC, EmployeeInforDELTest) {
         "ADD, , , ,18050301,AAAA BBBB,CL3,010-9777-6055,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050302,AAAA CCCC,CL3,010-9777-6056,19981206,PRO"),
+        "ADD, , , ,18050302,AAAA CCCC,CL3,010-9777-6056,19971206,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050303,AAAA BBBB,CL3,010-9777-6057,19980906,PRO"),
+        "ADD, , , ,18050305,AAAA BBBB,CL3,010-9777-6057,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050304,AAAA BBBB,CL3,010-9777-6058,19980906,PRO"),
+        "ADD, , , ,18050307,AAAA BBBB,CL3,010-9777-6058,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050305,AAAA BBBB,CL3,010-9777-6059,19980906,PRO"),
+        "ADD, , , ,18050304,AAAA BBBB,CL3,010-9777-6059,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "ADD, , , ,18050306,AAAA BBBB,CL3,010-9777-6010,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
-        "ADD, , , ,18050307,AAAA BBBB,CL3,010-9000-6010,19980906,PRO"),
+        "ADD, , , ,18050303,AAAA BBBB,CL3,010-9000-6010,19980906,PRO"),
         "");
     EXPECT_EQ(employeeInfoManager->ExcuteCommand(
         "DEL,-p, , ,birthday,19980906"),
