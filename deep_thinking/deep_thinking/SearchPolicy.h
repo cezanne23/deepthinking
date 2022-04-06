@@ -20,7 +20,6 @@ public:
     const string SEARCH_NAME_FIRST{ "-f" };
     const string SEARCH_NAME_LAST{ "-l" };
 
-
     vector<string> search_base(const map<string, EmployeeInfo>& employeeDict, function<bool(EmployeeInfo)> isMatched) {
         vector<string> result;
 

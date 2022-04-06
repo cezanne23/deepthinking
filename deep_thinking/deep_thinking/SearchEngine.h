@@ -14,7 +14,6 @@ public:
         stringstream ss(str);
         string word;
 
-
 		while (getline(ss, word, disc)) { 
 			while (' ' == word[0])  word.erase(0, 1);
 			result.push_back(word);
@@ -22,7 +21,6 @@ public:
 
 		return result;
 	}
-
 private:
 };
 
@@ -57,7 +55,7 @@ private:
     const int SEARCH_OPTION_IDX = 4;
 };
 
-class SearchEngine { // Interface class
+class SearchEngine { 
 public:
     SearchEngine() { employDB = EmployeeDB::getDB(); };
     vector<string> seachID(const map<string, EmployeeInfo>& employeeInfo,
