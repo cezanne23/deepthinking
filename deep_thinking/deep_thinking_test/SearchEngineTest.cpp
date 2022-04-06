@@ -124,8 +124,6 @@ TEST_F(SearchEngineSingletonDBTest, singletonDBSizeTest) {
 	res.clear();
 }
 
-
-// dude
 TEST(SearchEngineMaxDBTest, MaxDBTest) {
 	EmployeeDB::getDB()->employeeList.clear();
 	const size_t MAX_SIZE = 100000;
@@ -164,7 +162,6 @@ TEST(SearchEngineMaxDBTest, MaxDBSerchCLTest) {
 	ret = searchEngine.searchID(parser.split(incmd, ','));
 	EXPECT_EQ(100000, ret.size());
 }
-
 
 TEST(SearchEngineMaxDBTest, MaxDBSerchCertiTest) {
 	SearchEngine searchEngine;
@@ -254,8 +251,6 @@ TEST_F(SearchEngineTest, scenariTest) {
 
 	res = searchEngine.seachID(employeeInfoDict, parser.split("SCH,-p, , ,certi,PRO", ','));
 	ASSERT_EQ(res.size(), 12);
-	/* todo where to search sort, searchEngine or output print */
-
 	res.clear();
 
 	res = searchEngine.seachID(employeeInfoDict, parser.split("SCH, , , ,certi,ADV", ','));
@@ -264,7 +259,6 @@ TEST_F(SearchEngineTest, scenariTest) {
 
 	res = searchEngine.seachID(employeeInfoDict, parser.split("SCH,-p, , ,cl,CL4", ','));
 	ASSERT_EQ(res.size(), 9);
-	/* todo where to search sort, searchEngine or output print */
 	res.clear();
 
 	res = searchEngine.seachID(employeeInfoDict, parser.split("SCH, ,-m, ,birthday,09", ','));

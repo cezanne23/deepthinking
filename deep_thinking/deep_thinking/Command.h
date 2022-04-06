@@ -42,7 +42,6 @@ public:
     const int MOD_TARGET_KEY_IDX = 6;
     const int MOD_TARGET_VALUE_IDX = 7;
 
-
 protected:
     SearchEngine searchEngine;
     EmployeeDB* employeeDB;  

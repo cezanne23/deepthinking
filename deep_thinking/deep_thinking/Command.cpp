@@ -4,39 +4,38 @@
 using namespace std;
 
 string AddCommand::runCmd(vector<string>& command) {
-    // todo º°µµ class Á¤ÀÇ ÇÊ¿ä
-    EmployeeInfo employee{ command[ADD_CMD_EMPLOYEENUM_INFO_IDX],
-        command[ADD_CMD_NAME_INFO_IDX],
-        command[ADD_CMD_LEVEL_INFO_IDX],
-        command[ADD_CMD_PHONENUM_INFO_IDX],
-        command[ADD_CMD_BIRTHDAY_INFO_IDX],
-        command[ADD_CMD_CERTI_INFO_IDX] };
+	EmployeeInfo employee{ command[ADD_CMD_EMPLOYEENUM_INFO_IDX],
+		command[ADD_CMD_NAME_INFO_IDX],
+		command[ADD_CMD_LEVEL_INFO_IDX],
+		command[ADD_CMD_PHONENUM_INFO_IDX],
+		command[ADD_CMD_BIRTHDAY_INFO_IDX],
+		command[ADD_CMD_CERTI_INFO_IDX] };
 
-    employeeDB->employeeList.insert(pair<string, EmployeeInfo>(command[ADD_CMD_EMPLOYEENUM_INFO_IDX], employee));
-    return "";
+	employeeDB->employeeList.insert(pair<string, EmployeeInfo>(command[ADD_CMD_EMPLOYEENUM_INFO_IDX], employee));
+	return "";
 };
 
 string DeleteCommand::runCmd(vector<string>& command) {
-    vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
+	vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
 
-    if (searchResult.size() == 0) return "DEL,NONE";
+	if (searchResult.size() == 0) return "DEL,NONE";
 
-    vector<string> displayRecord;
-    if (command[CMD_DISPLAY_RECORD] == "-p") {
-        displayRecord = displayEmployeeInfo(searchResult, "DEL");
-    }
+	vector<string> displayRecord;
+	if (command[CMD_DISPLAY_RECORD] == "-p") {
+		displayRecord = displayEmployeeInfo(searchResult, "DEL");
+	}
 
-    for (const auto& employeeNum : searchResult) {
-        employeeDB->employeeList.erase(employeeNum);
-    }
+	for (const auto& employeeNum : searchResult) {
+		employeeDB->employeeList.erase(employeeNum);
+	}
 
-    if (displayRecord.size() > 0) return convertToString(displayRecord);
-    return "DEL," + to_string(searchResult.size());
+	if (displayRecord.size() > 0) return convertToString(displayRecord);
+	return "DEL," + to_string(searchResult.size());
 };
 
 string ModifyCommand::runCmd(vector<string>& command) {
-    vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
-    vector<string> displayRecord;
+	vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
+	vector<string> displayRecord;
 
 	if (command[CMD_DISPLAY_RECORD] == "-p") {
 		displayRecord = displayEmployeeInfo(searchResult, "MOD");
@@ -56,14 +55,14 @@ string ModifyCommand::runCmd(vector<string>& command) {
 };
 
 string SearchCommand::runCmd(vector<string>& command) {
-    vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
-    vector<string> displayRecord;
+	vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
+	vector<string> displayRecord;
 
-    if (searchResult.size() == 0) return "SCH,NONE";
+	if (searchResult.size() == 0) return "SCH,NONE";
 
-    if (command[CMD_DISPLAY_RECORD] == "-p") {
-        displayRecord = displayEmployeeInfo(searchResult, "SCH");
-        return convertToString(displayRecord);
-    }
-    return "SCH," + to_string(searchResult.size());
+	if (command[CMD_DISPLAY_RECORD] == "-p") {
+		displayRecord = displayEmployeeInfo(searchResult, "SCH");
+		return convertToString(displayRecord);
+	}
+	return "SCH," + to_string(searchResult.size());
 };
