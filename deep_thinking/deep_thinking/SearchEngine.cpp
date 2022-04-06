@@ -1,4 +1,3 @@
-
 #include "SearchEngine.h"
 
 vector<string> SearchEngineCore::searchID(const map<string, EmployeeInfo>& employeeInfo,

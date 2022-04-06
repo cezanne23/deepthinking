@@ -4,7 +4,6 @@
 using namespace std;
 
 string AddCommand::runCmd(vector<string>& command) {
-    // todo º°µµ class Á¤ÀÇ ÇÊ¿ä
     EmployeeInfo employee{ command[ADD_CMD_EMPLOYEENUM_INFO_IDX],
         command[ADD_CMD_NAME_INFO_IDX],
         command[ADD_CMD_LEVEL_INFO_IDX],
@@ -38,20 +37,20 @@ string ModifyCommand::runCmd(vector<string>& command) {
     vector<string> searchResult = searchEngine.seachID(employeeDB->employeeList, command);
     vector<string> displayRecord;
 
-	if (command[CMD_DISPLAY_RECORD] == "-p") {
-		displayRecord = displayEmployeeInfo(searchResult, "MOD");
-	}
-	string update_key = command[MOD_TARGET_KEY_IDX];
-	MODUpdate* update = updateList[update_key];
-	for (const auto& employeeNum : searchResult) {
-		update->update(employeeDB->employeeList[employeeNum], command[MOD_TARGET_VALUE_IDX]);
-	}
+    if (command[CMD_DISPLAY_RECORD] == "-p") {
+        displayRecord = displayEmployeeInfo(searchResult, "MOD");
+    }
+    string update_key = command[MOD_TARGET_KEY_IDX];
+    MODUpdate* update = updateList[update_key];
+    for (const auto& employeeNum : searchResult) {
+        update->update(employeeDB->employeeList[employeeNum], command[MOD_TARGET_VALUE_IDX]);
+    }
 
-	if (displayRecord.size() > 0)
-		return convertToString(displayRecord);
-	if (searchResult.size() > 0)
-		return string("MOD,") + to_string(searchResult.size());
-	return "MOD,NONE";
+    if (displayRecord.size() > 0)
+        return convertToString(displayRecord);
+    if (searchResult.size() > 0)
+        return string("MOD,") + to_string(searchResult.size());
+    return "MOD,NONE";
 
 };
 
